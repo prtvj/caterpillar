@@ -1,0 +1,193 @@
+.rfid-container {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-lg);
+}
+
+.rfid-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--spacing-lg);
+  max-width: 900px;
+}
+
+.scan-panel {
+  display: flex;
+  flex-direction: column;
+}
+
+.rfid-tabs {
+  display: flex;
+  border-bottom: 1px solid var(--color-border);
+}
+
+.rfid-tab {
+  flex: 1;
+  padding: var(--spacing-md);
+  font-weight: 600;
+  color: var(--color-text-secondary);
+  border-bottom: 2px solid transparent;
+}
+
+.rfid-tab.active {
+  color: var(--color-brand-yellow);
+  border-bottom-color: var(--color-brand-yellow);
+  background-color: var(--color-bg-hover);
+}
+
+.scan-area {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: var(--spacing-xl);
+  min-height: 400px;
+}
+
+.scanner-animation {
+  position: relative;
+  width: 120px;
+  height: 120px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--color-text-secondary);
+  border: 2px dashed var(--color-border-light);
+  border-radius: var(--radius-md);
+  margin-bottom: var(--spacing-lg);
+  transition: all 0.3s;
+}
+
+.scanner-animation.scanning {
+  color: var(--color-brand-yellow);
+  border-color: var(--color-brand-yellow);
+  box-shadow: 0 0 20px rgba(255, 205, 17, 0.2);
+}
+
+.scanner-animation.success {
+  color: var(--color-status-success);
+  border-color: var(--color-status-success);
+  border-style: solid;
+}
+
+.scanner-animation.error {
+  color: var(--color-status-error);
+  border-color: var(--color-status-error);
+  border-style: solid;
+}
+
+.scan-line {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background-color: var(--color-brand-yellow);
+  box-shadow: 0 0 8px var(--color-brand-yellow);
+  animation: scan 1.5s ease-in-out infinite alternate;
+}
+
+@keyframes scan {
+  0% { top: 10px; opacity: 0.5; }
+  50% { opacity: 1; }
+  100% { top: 110px; opacity: 0.5; }
+}
+
+.scan-instruction {
+  font-size: 1.1rem;
+  color: var(--color-text-primary);
+  margin-bottom: var(--spacing-xl);
+}
+
+.btn-scan {
+  background-color: var(--color-brand-yellow);
+  color: #000;
+  font-weight: 700;
+  padding: 12px 24px;
+  border-radius: var(--radius-md);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  transition: background-color 0.2s;
+}
+
+.btn-scan:hover:not(.disabled) {
+  background-color: var(--color-brand-yellow-hover);
+}
+
+.btn-scan.disabled {
+  background-color: var(--color-border);
+  color: var(--color-text-muted);
+  cursor: not-allowed;
+}
+
+.details-panel {
+  min-height: 400px;
+}
+
+.tag-details {
+  padding: var(--spacing-lg);
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-xl);
+  height: 100%;
+}
+
+.tag-details.empty {
+  align-items: center;
+  justify-content: center;
+  opacity: 0.5;
+}
+
+.detail-group label {
+  font-size: 0.8rem;
+  color: var(--color-text-secondary);
+  text-transform: uppercase;
+  display: block;
+  margin-bottom: 4px;
+}
+
+.text-large {
+  font-size: 1.5rem;
+  font-weight: 700;
+}
+
+.text-yellow {
+  color: var(--color-brand-yellow);
+}
+
+.text-muted {
+  color: var(--color-text-muted);
+  font-size: 0.875rem;
+  margin-top: 2px;
+}
+
+.status-banner {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-md);
+  padding: var(--spacing-md);
+  border-radius: var(--radius-md);
+  margin-top: auto;
+}
+
+.status-banner.success {
+  background-color: var(--color-status-success-bg);
+  color: var(--color-status-success);
+  border: 1px solid var(--color-status-success);
+}
+
+.status-banner.error {
+  background-color: var(--color-status-error-bg);
+  color: var(--color-status-error);
+  border: 1px solid var(--color-status-error);
+}
+
+.fade-in {
+  animation: fadeIn 0.5s ease-out forwards;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}

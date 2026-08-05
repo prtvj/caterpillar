@@ -1,0 +1,17 @@
+.chart-container {
+  padding: var(--spacing-md);
+  padding-bottom: var(--spacing-sm);
+  width: 100%;
+}
+
+/* Customizing recharts tooltip */
+.recharts-default-tooltip {
+  background-color: var(--color-bg-panel) !important;
+  border-color: var(--color-border) !important;
+  box-shadow: var(--shadow-md);
+}
+
+.recharts-tooltip-label {
+  color: var(--color-text-primary) !important;
+  font-weight: 600;
+}

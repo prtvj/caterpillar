@@ -1,0 +1,130 @@
+.assets-container {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-lg);
+  height: 100%;
+}
+
+.page-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.header-actions {
+  display: flex;
+  gap: var(--spacing-md);
+}
+
+.search-box {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-sm);
+  background-color: var(--color-bg-panel);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  padding: 0 var(--spacing-md);
+  height: 36px;
+}
+
+.search-box input {
+  background: none;
+  border: none;
+  color: var(--color-text-primary);
+  outline: none;
+}
+
+.btn-secondary {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-sm);
+  background-color: var(--color-bg-panel);
+  border: 1px solid var(--color-border);
+  color: var(--color-text-primary);
+  padding: 0 var(--spacing-md);
+  height: 36px;
+  border-radius: var(--radius-md);
+  font-size: 0.875rem;
+  font-weight: 500;
+  transition: all 0.2s;
+}
+
+.btn-secondary:hover {
+  background-color: var(--color-bg-hover);
+  border-color: var(--color-border-light);
+}
+
+.table-container {
+  flex: 1;
+  background-color: var(--color-bg-panel);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  overflow: auto;
+}
+
+.data-table {
+  width: 100%;
+  border-collapse: collapse;
+  text-align: left;
+}
+
+.data-table th {
+  position: sticky;
+  top: 0;
+  background-color: var(--color-bg-card);
+  padding: var(--spacing-md);
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  color: var(--color-text-secondary);
+  border-bottom: 1px solid var(--color-border);
+  z-index: 10;
+}
+
+.data-table td {
+  padding: var(--spacing-md);
+  border-bottom: 1px solid var(--color-border-light);
+  font-size: 0.875rem;
+}
+
+.data-table tr:hover {
+  background-color: var(--color-bg-hover);
+}
+
+.font-medium {
+  font-weight: 500;
+  color: var(--color-brand-yellow);
+}
+
+.status-badge {
+  font-size: 0.7rem;
+  padding: 4px 8px;
+  border-radius: 4px;
+  font-weight: 600;
+}
+
+.status-badge.running { background-color: var(--color-status-success-bg); color: var(--color-status-success); }
+.status-badge.idle { background-color: var(--color-status-warning-bg); color: var(--color-status-warning); }
+.status-badge.overdue { background-color: var(--color-status-error-bg); color: var(--color-status-error); }
+.status-badge.maintenance { background-color: var(--color-status-info-bg); color: var(--color-status-info); }
+
+.progress-bar-container {
+  display: inline-block;
+  width: 60px;
+  height: 6px;
+  background-color: var(--color-bg-card);
+  border-radius: 3px;
+  overflow: hidden;
+  vertical-align: middle;
+}
+
+.progress-bar {
+  height: 100%;
+  background-color: var(--color-status-success);
+}
+
+.progress-bar.danger {
+  background-color: var(--color-status-error);
+}
+
+.text-xs { font-size: 0.75rem; }
+.ml-2 { margin-left: 0.5rem; }
