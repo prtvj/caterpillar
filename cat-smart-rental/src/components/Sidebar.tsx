@@ -6,15 +6,14 @@ import {
   ScanLine, 
   Map, 
   FileText, 
-  PackageSearch, 
   BarChart3, 
-  TrendingUp, 
   Lightbulb, 
   Bell, 
   Wrench, 
   Settings,
   LogOut
 } from 'lucide-react';
+import { useStore } from '../store/useStore';
 import './Sidebar.css';
 
 const navItems = [
@@ -24,17 +23,18 @@ const navItems = [
   { name: 'RFID Check-In/Out', path: '/rfid', icon: ScanLine },
   { name: 'Live Tracking', path: '/tracking', icon: Map },
   { name: 'Agreements', path: '/agreements', icon: FileText },
-  { name: 'Inventory / Stock', path: '/inventory', icon: PackageSearch },
   { name: 'Usage Analytics', path: '/analytics', icon: BarChart3 },
-  { name: 'Demand Forecast', path: '/forecast', icon: TrendingUp },
   { name: 'AI Recommendations', path: '/recommendations', icon: Lightbulb },
-  { name: 'Alerts & Notifications', path: '/alerts', icon: Bell, badge: 12 },
+  { name: 'Alerts & Notifications', path: '/alerts', icon: Bell, showBadge: true },
   { name: 'Maintenance', path: '/maintenance', icon: Wrench },
   { name: 'Reports', path: '/reports', icon: FileText },
   { name: 'Settings', path: '/settings', icon: Settings },
 ];
 
 export function Sidebar() {
+  const alerts = useStore((state) => state.alerts);
+  const unreadCount = alerts.filter(a => !a.read).length;
+
   return (
     <aside className="sidebar">
       <div className="sidebar-header">
@@ -56,7 +56,7 @@ export function Sidebar() {
           >
             <item.icon className="nav-icon" size={18} />
             <span className="nav-label">{item.name}</span>
-            {item.badge && <span className="nav-badge">{item.badge}</span>}
+            {item.showBadge && unreadCount > 0 && <span className="nav-badge">{unreadCount}</span>}
           </NavLink>
         ))}
       </nav>

@@ -10,6 +10,7 @@ export interface Customer {
   totalAssets: number;
   activeRentals: number;
   idle: number;
+  demands?: { type: string; quantity: number; location: string }[];
 }
 
 export interface Asset {
@@ -34,6 +35,7 @@ export interface Asset {
   idleHoursPerDay?: number;
   rentalDays?: number;
   lastOperatorId?: string;
+  daysIdle?: number;
 }
 
 export interface Alert {
@@ -43,6 +45,7 @@ export interface Alert {
   description: string;
   timestamp: string;
   assetId?: string;
+  read?: boolean;
 }
 
 export interface KPI {

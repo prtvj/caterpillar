@@ -1,96 +1,162 @@
-import { Lightbulb, ArrowRight, TrendingUp, AlertTriangle, CheckCircle2 } from 'lucide-react';
+import { useState } from 'react';
+import { Lightbulb, ArrowRight, TrendingUp, AlertTriangle, CheckCircle2, Package } from 'lucide-react';
 import './Recommendations.css';
+import { DemandChart } from '../components/DemandChart';
 
-const recommendations = [
-  {
-    id: 1,
-    priority: 'High',
-    title: 'Move Idle Machine to Active Site',
-    reason: 'Excavator EQX1006 has been idle for 7+ hours at Ahmedabad site, while Mumbai site has a projected shortage of excavators next week.',
-    impact: 'Save ₹45,000 in rental loss and improve fleet utilization by 2%.',
-    action: 'Transfer to Mumbai'
-  },
-  {
-    id: 2,
-    priority: 'Medium',
-    title: 'Renew Rental Agreement',
-    reason: 'Agreement AGR1004 for Infra Solutions Ltd is expiring in 3 days. Customer has high performance score.',
-    impact: 'Secure ₹1,20,000 guaranteed revenue for next month.',
-    action: 'Send Renewal Contract'
-  },
-  {
-    id: 3,
-    priority: 'High',
-    title: 'Schedule Preventive Maintenance',
-    reason: 'Crane CRN1003 engine hours approaching 5,000 limit (currently 4,950).',
-    impact: 'Prevent potential breakdown saving estimated ₹2,00,000 in emergency repairs.',
-    action: 'Schedule Service'
-  },
-  {
-    id: 4,
-    priority: 'Low',
-    title: 'Increase Customer Security Deposit',
-    reason: 'Skyline Constructions has 2 overdue payments in the last 6 months.',
-    impact: 'Reduce credit risk exposure by 15%.',
-    action: 'Review Deposit Terms'
-  }
-];
+import { useStore } from '../store/useStore';
 
 export function Recommendations() {
-  const getPriorityIcon = (priority: string) => {
-    switch (priority) {
-      case 'High': return <AlertTriangle size={16} className="text-critical" />;
-      case 'Medium': return <TrendingUp size={16} className="text-warning" />;
-      default: return <CheckCircle2 size={16} className="text-info" />;
+  const assets = useStore(state => state.assets);
+  const customers = useStore(state => state.customers);
+  const transferAsset = useStore(state => state.transferAsset);
+
+  const [selectedCustomers, setSelectedCustomers] = useState<Record<string, string>>({});
+
+  // 1. Stock Overview
+  const machineTypes = Array.from(new Set(assets.map(a => a.type)));
+  const stockSummary = machineTypes.map(type => {
+    const typeAssets = assets.filter(a => a.type === type);
+    return {
+      type,
+      total: typeAssets.length,
+      idle: typeAssets.filter(a => a.status === 'Idle').length
+    };
+  });
+
+  // 2. Transfer Opportunities
+  const transferOpportunities = assets.filter(a => a.status === 'Idle').map(asset => {
+    const interestedCustomers = customers.filter(c => 
+      c.id !== asset.customerId && c.demands && c.demands.some(d => d.type === asset.type && d.quantity > 0)
+    );
+    return {
+      asset,
+      interestedCustomers
+    };
+  }).filter(opp => opp.interestedCustomers.length > 0);
+
+  const handleSelectCustomer = (assetId: string, customerId: string) => {
+    setSelectedCustomers(prev => ({ ...prev, [assetId]: customerId }));
+  };
+
+  const handleTransfer = (assetId: string) => {
+    const customerId = selectedCustomers[assetId];
+    if (customerId) {
+      transferAsset(assetId, customerId);
+      const newSelections = { ...selectedCustomers };
+      delete newSelections[assetId];
+      setSelectedCustomers(newSelections);
     }
   };
 
   return (
-    <div className="recommendations-container">
+    <div className="recommendations-container" style={{ paddingBottom: '2rem' }}>
       <div className="page-header">
         <h1 className="page-title">AI Recommendation Center</h1>
       </div>
       
-      <div className="ai-banner">
+      <div className="ai-banner" style={{ marginBottom: '2rem' }}>
         <Lightbulb size={24} className="text-yellow" />
         <div>
           <strong>CAT AI Engine is active</strong>
-          <div className="text-muted">Analyzing 200 assets and 500+ data points to optimize your fleet.</div>
+          <div className="text-muted">Analyzing {assets.length} assets and matching idle equipment with customer demands.</div>
         </div>
       </div>
 
-      <div className="recommendations-grid">
-        {recommendations.map((rec) => (
-          <div key={rec.id} className="rec-card">
-            <div className="rec-header">
-              <div className="rec-title-wrap">
-                {getPriorityIcon(rec.priority)}
-                <h3 className="rec-title">{rec.title}</h3>
-              </div>
-              <span className={`priority-badge ${rec.priority.toLowerCase()}`}>
-                {rec.priority} Priority
-              </span>
-            </div>
-            
-            <div className="rec-body">
-              <div className="rec-section">
-                <span className="rec-label">Reason</span>
-                <p className="rec-text">{rec.reason}</p>
-              </div>
-              <div className="rec-section impact">
-                <span className="rec-label text-success">Expected Impact</span>
-                <p className="rec-text font-medium">{rec.impact}</p>
+      <div style={{ marginBottom: '2rem' }}>
+        <h2 style={{ fontSize: '1.25rem', fontWeight: 600, marginBottom: '1rem', color: '#facc15', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+          <TrendingUp size={20} /> Demand Forecasting
+        </h2>
+        <DemandChart />
+      </div>
+
+      <div style={{ marginBottom: '2rem' }}>
+        <h2 style={{ fontSize: '1.25rem', fontWeight: 600, marginBottom: '1rem', color: '#facc15', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+          <Package size={20} /> Stock Quantity Overview
+        </h2>
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(200px, 1fr))', gap: '1rem' }}>
+          {stockSummary.map(summary => (
+            <div key={summary.type} style={{ backgroundColor: 'rgba(255, 255, 255, 0.05)', padding: '1rem', borderRadius: '8px', border: '1px solid rgba(255, 255, 255, 0.1)' }}>
+              <div style={{ fontSize: '1.1rem', fontWeight: 600, marginBottom: '0.5rem' }}>{summary.type}</div>
+              <div style={{ color: '#9ca3af', fontSize: '0.9rem' }}>
+                <span>Total: <strong style={{ color: 'white' }}>{summary.total}</strong></span>
               </div>
             </div>
-            
-            <div className="rec-footer">
-              <button className="btn-action">
-                {rec.action} <ArrowRight size={16} />
-              </button>
+          ))}
+        </div>
+      </div>
+
+      <h2 style={{ fontSize: '1.25rem', fontWeight: 600, marginBottom: '1rem', color: '#facc15' }}>Transfer Opportunities</h2>
+      
+      {transferOpportunities.length === 0 ? (
+        <div className="rec-card">
+          <div className="rec-header">
+            <div className="rec-title-wrap">
+              <CheckCircle2 size={16} className="text-info" />
+              <h3 className="rec-title">Fleet is Optimized</h3>
             </div>
           </div>
-        ))}
-      </div>
+          <div className="rec-body">
+            <p className="rec-text">No idle machines matching current customer demands were found.</p>
+          </div>
+        </div>
+      ) : (
+        <div className="recommendations-grid">
+          {transferOpportunities.map((opp) => (
+            <div key={opp.asset.id} className="rec-card">
+              <div className="rec-header">
+                <div className="rec-title-wrap">
+                  <AlertTriangle size={16} className="text-warning" />
+                  <h3 className="rec-title">Idle {opp.asset.type} Available</h3>
+                </div>
+                <span className="priority-badge high">High Priority</span>
+              </div>
+              
+              <div className="rec-body">
+                <div className="rec-section">
+                  <span className="rec-label">Asset Details</span>
+                  <p className="rec-text" style={{ fontSize: '0.9rem', marginBottom: '0.5rem' }}>
+                    <strong>{opp.asset.id}</strong> has been idle for {opp.asset.daysIdle || 0} days at <em>{opp.asset.location}</em>. (Currently assigned to {opp.asset.customerName})
+                  </p>
+                </div>
+                <div className="rec-section impact">
+                  <span className="rec-label text-success">Interested Customers</span>
+                  <select 
+                    style={{ 
+                      width: '100%', 
+                      padding: '0.5rem', 
+                      marginTop: '0.5rem', 
+                      backgroundColor: 'rgba(0,0,0,0.2)', 
+                      border: '1px solid rgba(255,255,255,0.1)', 
+                      color: 'white',
+                      borderRadius: '4px'
+                    }}
+                    value={selectedCustomers[opp.asset.id] || ''}
+                    onChange={(e) => handleSelectCustomer(opp.asset.id, e.target.value)}
+                  >
+                    <option value="" disabled>Select a customer...</option>
+                    {opp.interestedCustomers.map(c => (
+                      <option key={c.id} value={c.id}>
+                        {c.name} (Needs {c.demands?.find(d => d.type === opp.asset.type)?.quantity} in {c.location})
+                      </option>
+                    ))}
+                  </select>
+                </div>
+              </div>
+              
+              <div className="rec-footer">
+                <button 
+                  className="btn-action" 
+                  onClick={() => handleTransfer(opp.asset.id)}
+                  disabled={!selectedCustomers[opp.asset.id]}
+                  style={{ opacity: selectedCustomers[opp.asset.id] ? 1 : 0.5, cursor: selectedCustomers[opp.asset.id] ? 'pointer' : 'not-allowed' }}
+                >
+                  Transfer Asset <ArrowRight size={16} />
+                </button>
+              </div>
+            </div>
+          ))}
+        </div>
+      )}
     </div>
   );
 }

@@ -9,6 +9,10 @@ interface AppState {
   kpi: KPI;
   initialize: () => void;
   simulateTick: () => void;
+  transferAsset: (assetId: string, toCustomerId: string) => void;
+  checkInOutAsset: (assetId: string, action: 'checkin' | 'checkout') => void;
+  markAlertAsRead: (alertId: string) => void;
+  markAllAlertsAsRead: () => void;
 }
 
 const calculateKPI = (customers: Customer[], assets: Asset[]): KPI => {
@@ -48,7 +52,7 @@ export const useStore = create<AppState>((set) => ({
   initialize: () => {
     const customers = generateMockDealers();
     const assets = generateMockAssets(200, customers);
-    const alerts = generateInitialAlerts();
+    const alerts = generateInitialAlerts(customers, assets);
     set({
       customers,
       assets,
@@ -81,5 +85,107 @@ export const useStore = create<AppState>((set) => ({
       assets: updatedAssets,
       kpi: calculateKPI(state.customers, updatedAssets)
     };
-  })
+  }),
+
+  transferAsset: (assetId: string, toCustomerId: string) => set((state) => {
+    const assetIndex = state.assets.findIndex(a => a.id === assetId);
+    const toCustomerIndex = state.customers.findIndex(c => c.id === toCustomerId);
+    if (assetIndex === -1 || toCustomerIndex === -1) return state;
+
+    const asset = state.assets[assetIndex];
+    const fromCustomerId = asset.customerId;
+    const toCustomer = state.customers[toCustomerIndex];
+    const fromCustomerIndex = state.customers.findIndex(c => c.id === fromCustomerId);
+
+    // Update Asset
+    const updatedAsset = {
+      ...asset,
+      customerId: toCustomer.id,
+      customerName: toCustomer.name,
+      location: toCustomer.location,
+      status: 'Running' as const,
+      daysIdle: 0,
+      lastUpdated: new Date().toISOString()
+    };
+
+    const newAssets = [...state.assets];
+    newAssets[assetIndex] = updatedAsset;
+
+    // Update Customers (transfer counts and reduce demand)
+    const newCustomers = [...state.customers];
+    
+    // Decrease from source customer
+    if (fromCustomerIndex !== -1) {
+      const fromCust = newCustomers[fromCustomerIndex];
+      newCustomers[fromCustomerIndex] = {
+        ...fromCust,
+        totalAssets: Math.max(0, fromCust.totalAssets - 1),
+        idle: Math.max(0, fromCust.idle - 1)
+      };
+    }
+
+    // Increase for target customer & update demands
+    const updatedDemands = (toCustomer.demands || []).map(d => {
+      if (d.type === asset.type && d.quantity > 0) {
+        return { ...d, quantity: d.quantity - 1 };
+      }
+      return d;
+    }).filter(d => d.quantity > 0);
+
+    newCustomers[toCustomerIndex] = {
+      ...toCustomer,
+      totalAssets: toCustomer.totalAssets + 1,
+      activeRentals: toCustomer.activeRentals + 1,
+      demands: updatedDemands
+    };
+
+    return {
+      assets: newAssets,
+      customers: newCustomers,
+      kpi: calculateKPI(newCustomers, newAssets)
+    };
+  }),
+
+  checkInOutAsset: (assetId: string, action: 'checkin' | 'checkout') => set((state) => {
+    const assetIndex = state.assets.findIndex(a => a.id === assetId);
+    if (assetIndex === -1) return state;
+
+    const asset = state.assets[assetIndex];
+    const customerIndex = state.customers.findIndex(c => c.id === asset.customerId);
+    
+    if (action === 'checkin' && asset.status !== 'Running') return state;
+    if (action === 'checkout' && asset.status !== 'Idle') return state;
+
+    const newAssets = [...state.assets];
+    newAssets[assetIndex] = {
+      ...asset,
+      status: action === 'checkin' ? 'Idle' : 'Running',
+      lastUpdated: new Date().toISOString()
+    };
+
+    let newCustomers = state.customers;
+    if (customerIndex !== -1) {
+      newCustomers = [...state.customers];
+      const cust = newCustomers[customerIndex];
+      newCustomers[customerIndex] = {
+        ...cust,
+        activeRentals: action === 'checkin' ? Math.max(0, cust.activeRentals - 1) : cust.activeRentals + 1,
+        idle: action === 'checkin' ? cust.idle + 1 : Math.max(0, cust.idle - 1)
+      };
+    }
+
+    return {
+      assets: newAssets,
+      customers: newCustomers,
+      kpi: calculateKPI(newCustomers, newAssets)
+    };
+  }),
+
+  markAlertAsRead: (alertId: string) => set((state) => ({
+    alerts: state.alerts.map(a => a.id === alertId ? { ...a, read: true } : a)
+  })),
+
+  markAllAlertsAsRead: () => set((state) => ({
+    alerts: state.alerts.map(a => ({ ...a, read: true }))
+  }))
 }));

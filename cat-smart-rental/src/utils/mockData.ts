@@ -24,10 +24,23 @@ export const generateMockDealers = (): Customer[] => {
     { id: 'DLR020', name: 'Crown Machinery Pvt Ltd', contactPerson: 'Naveen Reddy', phone: '9990011223', email: 'naveen@crownmachinery.com', location: 'Hyderabad, TS', totalAssets: 63, activeRentals: 47 }
   ];
 
-  return dealers.map((dealer) => ({
-    ...dealer,
-    idle: dealer.totalAssets - dealer.activeRentals
-  }));
+  return dealers.map((dealer) => {
+    const numDemands = Math.floor(Math.random() * 3); // 0 to 2 demands
+    const demands = [];
+    for (let i = 0; i < numDemands; i++) {
+      demands.push({
+        type: ['Excavator', 'Bulldozer', 'Crane', 'Grader', 'Loader', 'Roller'][Math.floor(Math.random() * 6)],
+        quantity: Math.floor(Math.random() * 3) + 1,
+        location: dealer.location
+      });
+    }
+
+    return {
+      ...dealer,
+      idle: dealer.totalAssets - dealer.activeRentals,
+      demands
+    };
+  });
 };
 
 const machineTypes = ['Excavator', 'Bulldozer', 'Crane', 'Grader', 'Loader', 'Roller'];
@@ -108,17 +121,107 @@ export const generateMockAssets = (count: number, customers: Customer[]): Asset[
       engineHoursPerDay: isHardcoded ? hData!.engineHoursPerDay : parseFloat((Math.random() * 10).toFixed(1)),
       idleHoursPerDay: isHardcoded ? hData!.idleHoursPerDay : parseFloat((Math.random() * 10).toFixed(1)),
       rentalDays: isHardcoded ? hData!.rentalDays : Math.floor(Math.random() * 30) + 5,
-      lastOperatorId: isHardcoded ? hData!.lastOperatorId : opId
+      lastOperatorId: isHardcoded ? hData!.lastOperatorId : opId,
+      daysIdle: (isHardcoded ? (hData!.engineHoursPerDay > 0 ? 'Running' : 'Idle') : status) === 'Idle' ? Math.floor(Math.random() * 10) + 1 : 0
     });
   }
   return assets;
 };
 
-export const generateInitialAlerts = (): Alert[] => {
-  return [
+export const generateInitialAlerts = (customers?: Customer[], assets?: Asset[]): Alert[] => {
+  const baseAlerts: Alert[] = [
     { id: 'AL1', type: 'Critical', title: 'Rental Expired', description: 'Excavator EQX1004 rental expired', timestamp: new Date(Date.now() - 3600000).toISOString(), assetId: 'EQX1004' },
     { id: 'AL2', type: 'Warning', title: 'Geofence Breach', description: 'Bulldozer EQX1007 moved outside allowed zone', timestamp: new Date(Date.now() - 1800000).toISOString(), assetId: 'EQX1007' },
     { id: 'AL3', type: 'Warning', title: 'High Idle Time', description: 'Grader EQX1006 idle for 7+ hours', timestamp: new Date(Date.now() - 900000).toISOString(), assetId: 'EQX1006' },
     { id: 'AL4', type: 'Info', title: 'Fuel Level Low', description: 'Crane EQX1002 fuel level below 20%', timestamp: new Date(Date.now() - 300000).toISOString(), assetId: 'EQX1002' },
+    { id: 'AL5', type: 'Warning', title: 'Maintenance Overdue', description: 'Loader EQX1012 missed scheduled maintenance', timestamp: new Date(Date.now() - 7200000).toISOString(), assetId: 'EQX1012' },
+    { id: 'AL6', type: 'Critical', title: 'Engine Overheating', description: 'Excavator EQX1045 reporting high engine temperature', timestamp: new Date(Date.now() - 150000).toISOString(), assetId: 'EQX1045' },
+    { id: 'AL7', type: 'Info', title: 'Equipment Returned', description: 'Roller EQX1088 has been successfully checked in', timestamp: new Date(Date.now() - 450000).toISOString(), assetId: 'EQX1088' },
+    { id: 'AL8', type: 'Warning', title: 'Unauthorized Operation', description: 'Operator ID OP304 attempting to start Crane EQX1099', timestamp: new Date(Date.now() - 600000).toISOString(), assetId: 'EQX1099' },
+    { id: 'AL9', type: 'Info', title: 'Battery Low', description: 'GPS tracker on Bulldozer EQX1021 battery below 15%', timestamp: new Date(Date.now() - 86400000).toISOString(), assetId: 'EQX1021' },
+    { id: 'AL10', type: 'Critical', title: 'Impact Detected', description: 'Severe impact registered on Grader EQX1050', timestamp: new Date(Date.now() - 30000).toISOString(), assetId: 'EQX1050' },
   ];
+
+  if (!customers) return baseAlerts;
+
+  const demandAlerts: Alert[] = [];
+  let alertCounter = 5;
+
+  customers.forEach(customer => {
+    if (customer.demands) {
+      customer.demands.forEach(demand => {
+        if (demand.quantity > 0) {
+          demandAlerts.push({
+            id: `AL${alertCounter++}`,
+            type: 'Info',
+            title: 'Equipment Demand Request',
+            description: `${customer.name} requires ${demand.quantity} ${demand.type}(s) at ${demand.location}.`,
+            timestamp: new Date(Date.now() - Math.random() * 86400000).toISOString()
+          });
+          
+          // Check for idle assets matching this demand
+          if (assets) {
+            const matchingIdleAssets = assets.filter(
+              a => a.type === demand.type && a.status === 'Idle' && (a.daysIdle || 0) >= 3 && a.customerId !== customer.id
+            );
+            
+            if (matchingIdleAssets.length > 0) {
+              const matchedAsset = matchingIdleAssets[0]; // Just take the first one for the alert
+              demandAlerts.push({
+                id: `AL${alertCounter++}`,
+                type: 'Warning',
+                title: 'Idle Asset Match',
+                description: `${matchedAsset.type} ${matchedAsset.id} (idle for ${matchedAsset.daysIdle} days at ${matchedAsset.customerName}) can be transferred to ${customer.name} to fulfill their demand.`,
+                timestamp: new Date().toISOString(),
+                assetId: matchedAsset.id
+              });
+            }
+          }
+        }
+      });
+    }
+  });
+
+  if (assets) {
+    const runningAssets = assets.filter(a => a.status === 'Running');
+    // Generate checkout approaching alerts for a few random running assets
+    runningAssets.slice(0, 3).forEach(asset => {
+      const checkoutDateObj = new Date();
+      checkoutDateObj.setDate(checkoutDateObj.getDate() + 3);
+      const checkoutDateStr = checkoutDateObj.toISOString().split('T')[0];
+      
+      // Mutate the mock asset's checkout date to match the alert for consistency
+      asset.checkOutDate = checkoutDateStr;
+
+      demandAlerts.push({
+        id: `AL${alertCounter++}`,
+        type: 'Warning',
+        title: 'Checkout Approaching',
+        description: `Checkout date for ${asset.type} ${asset.id} at ${asset.customerName} is approaching in 3 days (${checkoutDateStr}).`,
+        timestamp: new Date().toISOString(),
+        assetId: asset.id
+      });
+    });
+
+    // Generate lease expiring alerts (2 days prior to rental end)
+    runningAssets.slice(3, 5).forEach(asset => {
+      const leaseEndDateObj = new Date();
+      leaseEndDateObj.setDate(leaseEndDateObj.getDate() + 2);
+      const leaseEndDateStr = leaseEndDateObj.toISOString().split('T')[0];
+      
+      asset.checkOutDate = leaseEndDateStr;
+
+      demandAlerts.push({
+        id: `AL${alertCounter++}`,
+        type: 'Warning',
+        title: 'Lease Expiring Soon',
+        description: `The rental lease for ${asset.type} ${asset.id} is going to end in 2 days (${leaseEndDateStr}).`,
+        timestamp: new Date().toISOString(),
+        assetId: asset.id
+      });
+    });
+  }
+
+  // Sort by timestamp descending
+  return [...baseAlerts, ...demandAlerts].sort((a, b) => new Date(b.timestamp).getTime() - new Date(a.timestamp).getTime());
 };

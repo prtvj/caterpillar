@@ -149,3 +149,133 @@
   font-size: 0.75rem;
   color: var(--color-text-secondary);
 }
+
+.notification-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.notification-dropdown {
+  position: absolute;
+  top: calc(100% + 15px);
+  right: -50px;
+  width: 320px;
+  background-color: var(--color-bg-panel);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.5);
+  z-index: 50;
+  display: flex;
+  flex-direction: column;
+}
+
+.dropdown-header {
+  padding: var(--spacing-md);
+  border-bottom: 1px solid var(--color-border);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.dropdown-header h3 {
+  font-size: 0.875rem;
+  font-weight: 600;
+  margin: 0;
+  color: var(--color-text-primary);
+}
+
+.dropdown-header .badge {
+  font-size: 0.7rem;
+  background-color: rgba(250, 204, 21, 0.1);
+  color: #facc15;
+  padding: 2px 6px;
+  border-radius: var(--radius-full);
+  font-weight: 600;
+}
+
+.dropdown-body {
+  max-height: 300px;
+  overflow-y: auto;
+}
+
+.dropdown-item {
+  display: flex;
+  gap: var(--spacing-md);
+  padding: var(--spacing-md);
+  border-bottom: 1px solid var(--color-border);
+  transition: background-color 0.2s;
+  cursor: pointer;
+}
+
+.dropdown-item:hover {
+  background-color: rgba(255, 255, 255, 0.02);
+}
+
+.dropdown-item.read {
+  opacity: 0.6;
+  background-color: rgba(255, 255, 255, 0.01);
+}
+
+.dropdown-item:last-child {
+  border-bottom: none;
+}
+
+.dropdown-icon {
+  margin-top: 2px;
+}
+
+.dropdown-content {
+  flex: 1;
+}
+
+.dropdown-title {
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--color-text-primary);
+  margin-bottom: 4px;
+}
+
+.dropdown-desc {
+  font-size: 0.75rem;
+  color: var(--color-text-secondary);
+  line-height: 1.4;
+  margin-bottom: 6px;
+}
+
+.dropdown-time {
+  font-size: 0.7rem;
+  color: var(--color-text-muted);
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.dropdown-empty {
+  padding: var(--spacing-xl) var(--spacing-md);
+  text-align: center;
+  color: var(--color-text-muted);
+  font-size: 0.875rem;
+}
+
+.dropdown-footer {
+  padding: var(--spacing-sm);
+  border-top: 1px solid var(--color-border);
+}
+
+.view-all-btn {
+  width: 100%;
+  padding: 8px;
+  background: none;
+  border: none;
+  color: #facc15;
+  font-size: 0.875rem;
+  font-weight: 500;
+  cursor: pointer;
+  border-radius: var(--radius-sm);
+  transition: background-color 0.2s;
+}
+
+.view-all-btn:hover {
+  background-color: rgba(250, 204, 21, 0.1);
+}

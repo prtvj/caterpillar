@@ -76,7 +76,7 @@ export function Dashboard() {
           </div>
         </div>
         <div className="alerts-section">
-          <AlertWidget />
+          <AlertWidget limit={5} />
         </div>
       </div>
 
