@@ -1,13 +1,33 @@
-import type { Asset, Customer, Alert, KPI, MachineStatus } from '../types';
+import type { Asset, Customer, Alert, MachineStatus } from '../types';
 
 export const generateMockDealers = (): Customer[] => {
-  return [
-    { id: 'DLR001', name: 'ABC Infra Pvt Ltd', contactPerson: 'Ramesh Kumar', phone: '9876543210', email: 'ramesh@abcinfra.com', location: 'Mumbai, MH', totalAssets: 45, activeRentals: 34, status: 'Active' },
-    { id: 'DLR002', name: 'BuildMax Constructions', contactPerson: 'Suresh Patel', phone: '9123456789', email: 'suresh@buildmax.com', location: 'Ahmedabad, GJ', totalAssets: 36, activeRentals: 28, status: 'Active' },
-    { id: 'DLR003', name: 'Infra Solutions Ltd', contactPerson: 'Anil Sharma', phone: '8989776655', email: 'anil@infrasol.com', location: 'Delhi, DL', totalAssets: 62, activeRentals: 45, status: 'Active' },
-    { id: 'DLR004', name: 'EarthWorks India', contactPerson: 'Vikram Singh', phone: '9001122334', email: 'vikram@earthworks.com', location: 'Pune, MH', totalAssets: 27, activeRentals: 22, status: 'Active' },
-    { id: 'DLR005', name: 'MegaBuild Infra', contactPerson: 'Manoj Verma', phone: '9812345678', email: 'manoj@megabuild.com', location: 'Lucknow, UP', totalAssets: 39, activeRentals: 26, status: 'Active' }
+  const dealers = [
+    { id: 'DLR001', name: 'ABC Infra Pvt Ltd', contactPerson: 'Ramesh Kumar', phone: '9876543210', email: 'ramesh@abcinfra.com', location: 'Mumbai, MH', totalAssets: 45, activeRentals: 34 },
+    { id: 'DLR002', name: 'BuildMax Constructions', contactPerson: 'Suresh Patel', phone: '9123456789', email: 'suresh@buildmax.com', location: 'Ahmedabad, GJ', totalAssets: 36, activeRentals: 28 },
+    { id: 'DLR003', name: 'Infra Solutions Ltd', contactPerson: 'Anil Sharma', phone: '8989776655', email: 'anil@infrasol.com', location: 'Delhi, DL', totalAssets: 62, activeRentals: 45 },
+    { id: 'DLR004', name: 'EarthWorks India', contactPerson: 'Vikram Singh', phone: '9001122334', email: 'vikram@earthworks.com', location: 'Pune, MH', totalAssets: 27, activeRentals: 22 },
+    { id: 'DLR005', name: 'MegaBuild Infra', contactPerson: 'Manoj Verma', phone: '9812345678', email: 'manoj@megabuild.com', location: 'Lucknow, UP', totalAssets: 39, activeRentals: 26 },
+    { id: 'DLR006', name: 'Skyline Heavy Works', contactPerson: 'Arjun Desai', phone: '9876501122', email: 'arjun@skylinehw.com', location: 'Surat, GJ', totalAssets: 31, activeRentals: 24 },
+    { id: 'DLR007', name: 'Prime Build Systems', contactPerson: 'Nitin Rao', phone: '9933102233', email: 'nitin@primebuild.com', location: 'Nagpur, MH', totalAssets: 54, activeRentals: 40 },
+    { id: 'DLR008', name: 'Metro Infrastructure Co', contactPerson: 'Rahul Nair', phone: '9988776655', email: 'rahul@metroinfra.co', location: 'Kochi, KL', totalAssets: 22, activeRentals: 16 },
+    { id: 'DLR009', name: 'Greenfield Contractors', contactPerson: 'Kiran Joshi', phone: '9090909090', email: 'kiran@greenfield.com', location: 'Jaipur, RJ', totalAssets: 48, activeRentals: 35 },
+    { id: 'DLR010', name: 'UrbanCore Rentals', contactPerson: 'Sanjay Mehta', phone: '9765432109', email: 'sanjay@urbancore.com', location: 'Indore, MP', totalAssets: 41, activeRentals: 30 },
+    { id: 'DLR011', name: 'Titan Earth Movers', contactPerson: 'Deepak Kulkarni', phone: '9345612780', email: 'deepak@titanearth.com', location: 'Thane, MH', totalAssets: 58, activeRentals: 44 },
+    { id: 'DLR012', name: 'Venture Build Pvt Ltd', contactPerson: 'Amit Khanna', phone: '9898012345', email: 'amit@venturebuild.com', location: 'Noida, UP', totalAssets: 29, activeRentals: 21 },
+    { id: 'DLR013', name: 'Summit Construction', contactPerson: 'Vivek Sinha', phone: '9012345678', email: 'vivek@summitcon.com', location: 'Bhopal, MP', totalAssets: 67, activeRentals: 50 },
+    { id: 'DLR014', name: 'BlueRock Infra', contactPerson: 'Harish Gupta', phone: '9321456789', email: 'harish@bluerockinfra.com', location: 'Chennai, TN', totalAssets: 34, activeRentals: 25 },
+    { id: 'DLR015', name: 'Apex Civil Works', contactPerson: 'Prakash Iyer', phone: '9445566778', email: 'prakash@apexcivil.com', location: 'Mysuru, KA', totalAssets: 26, activeRentals: 18 },
+    { id: 'DLR016', name: 'National Equipments', contactPerson: 'Shyam Bansal', phone: '9556677889', email: 'shyam@nationalequip.com', location: 'Kanpur, UP', totalAssets: 53, activeRentals: 38 },
+    { id: 'DLR017', name: 'Pioneer Infra Ventures', contactPerson: 'Rakesh Jain', phone: '9667788990', email: 'rakesh@pioneerinfra.com', location: 'Rajkot, GJ', totalAssets: 44, activeRentals: 31 },
+    { id: 'DLR018', name: 'Dynamic Build Corp', contactPerson: 'Mohit Agarwal', phone: '9778899001', email: 'mohit@dynamicbuild.com', location: 'Faridabad, HR', totalAssets: 37, activeRentals: 27 },
+    { id: 'DLR019', name: 'Reliant Earthworks', contactPerson: 'Siddharth Bose', phone: '9889900112', email: 'siddharth@reliantearth.com', location: 'Patna, BR', totalAssets: 49, activeRentals: 36 },
+    { id: 'DLR020', name: 'Crown Machinery Pvt Ltd', contactPerson: 'Naveen Reddy', phone: '9990011223', email: 'naveen@crownmachinery.com', location: 'Hyderabad, TS', totalAssets: 63, activeRentals: 47 }
   ];
+
+  return dealers.map((dealer) => ({
+    ...dealer,
+    idle: dealer.totalAssets - dealer.activeRentals
+  }));
 };
 
 const machineTypes = ['Excavator', 'Bulldozer', 'Crane', 'Grader', 'Loader', 'Roller'];

@@ -1,5 +1,4 @@
 import { useStore } from '../store/useStore';
-import { Search } from 'lucide-react';
 
 export function Customers() {
   const customers = useStore((state) => state.customers);
@@ -17,8 +16,8 @@ export function Customers() {
               <th>Contact</th>
               <th>Location</th>
               <th>Total Assets</th>
-              <th>Active Rentals</th>
-              <th>Status</th>
+              <th>Active</th>
+              <th>Idle</th>
             </tr>
           </thead>
           <tbody>
@@ -30,7 +29,7 @@ export function Customers() {
                 <td>{d.location}</td>
                 <td>{d.totalAssets}</td>
                 <td>{d.activeRentals}</td>
-                <td><span className={`status-badge ${d.status === 'Active' ? 'running' : 'idle'}`}>{d.status}</span></td>
+                <td>{d.idle}</td>
               </tr>
             ))}
           </tbody>

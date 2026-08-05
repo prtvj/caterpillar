@@ -9,7 +9,7 @@ export interface Customer {
   location: string;
   totalAssets: number;
   activeRentals: number;
-  status: 'Active' | 'Inactive';
+  idle: number;
 }
 
 export interface Asset {
