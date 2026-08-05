@@ -14,7 +14,7 @@ const recommendations = [
     id: 2,
     priority: 'Medium',
     title: 'Renew Rental Agreement',
-    reason: 'Agreement AGR1004 for Infra Solutions Ltd is expiring in 3 days. Dealer has high performance score.',
+    reason: 'Agreement AGR1004 for Infra Solutions Ltd is expiring in 3 days. Customer has high performance score.',
     impact: 'Secure ₹1,20,000 guaranteed revenue for next month.',
     action: 'Send Renewal Contract'
   },
@@ -29,7 +29,7 @@ const recommendations = [
   {
     id: 4,
     priority: 'Low',
-    title: 'Increase Dealer Security Deposit',
+    title: 'Increase Customer Security Deposit',
     reason: 'Skyline Constructions has 2 overdue payments in the last 6 months.',
     impact: 'Reduce credit risk exposure by 15%.',
     action: 'Review Deposit Terms'

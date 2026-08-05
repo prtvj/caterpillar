@@ -1,6 +1,6 @@
-import type { Asset, Dealer, Alert, KPI, MachineStatus } from '../types';
+import type { Asset, Customer, Alert, KPI, MachineStatus } from '../types';
 
-export const generateMockDealers = (): Dealer[] => {
+export const generateMockDealers = (): Customer[] => {
   return [
     { id: 'DLR001', name: 'ABC Infra Pvt Ltd', contactPerson: 'Ramesh Kumar', phone: '9876543210', email: 'ramesh@abcinfra.com', location: 'Mumbai, MH', totalAssets: 45, activeRentals: 34, status: 'Active' },
     { id: 'DLR002', name: 'BuildMax Constructions', contactPerson: 'Suresh Patel', phone: '9123456789', email: 'suresh@buildmax.com', location: 'Ahmedabad, GJ', totalAssets: 36, activeRentals: 28, status: 'Active' },
@@ -17,12 +17,12 @@ const coordinatesList: [number, number][] = [
   [19.0760, 72.8777], [28.7041, 77.1025], [23.0225, 72.5714], [18.5204, 73.8567], [26.8467, 80.9462], [12.9716, 77.5946], [23.2599, 77.4126]
 ];
 
-export const generateMockAssets = (count: number, dealers: Dealer[]): Asset[] => {
+export const generateMockAssets = (count: number, customers: Customer[]): Asset[] => {
   const assets: Asset[] = [];
   for (let i = 1; i <= count; i++) {
     const typeIdx = Math.floor(Math.random() * machineTypes.length);
     const locIdx = Math.floor(Math.random() * locations.length);
-    const dealer = dealers[Math.floor(Math.random() * dealers.length)];
+    const customer = customers[Math.floor(Math.random() * customers.length)];
     
     // Add some random offset to coords so they don't overlap exactly
     const latOffset = (Math.random() - 0.5) * 0.5;
@@ -38,8 +38,8 @@ export const generateMockAssets = (count: number, dealers: Dealer[]): Asset[] =>
       id: `EQX${1000 + i}`,
       type: machineTypes[typeIdx],
       model: machineModels[typeIdx],
-      dealerId: dealer.id,
-      dealerName: dealer.name,
+      customerId: customer.id,
+      customerName: customer.name,
       status,
       location: locations[locIdx],
       coordinates: [coordinatesList[locIdx][0] + latOffset, coordinatesList[locIdx][1] + lngOffset],

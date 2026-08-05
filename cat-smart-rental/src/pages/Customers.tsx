@@ -1,12 +1,12 @@
 import { useStore } from '../store/useStore';
 import { Search } from 'lucide-react';
 
-export function Dealers() {
-  const dealers = useStore((state) => state.dealers);
+export function Customers() {
+  const customers = useStore((state) => state.customers);
   return (
     <div className="assets-container">
       <div className="page-header">
-        <h1 className="page-title">Dealers List</h1>
+        <h1 className="page-title">Customers List</h1>
       </div>
       <div className="table-container">
         <table className="data-table">
@@ -22,7 +22,7 @@ export function Dealers() {
             </tr>
           </thead>
           <tbody>
-            {dealers.map((d) => (
+            {customers.map((d) => (
               <tr key={d.id}>
                 <td className="font-medium">{d.id}</td>
                 <td>{d.name}</td>

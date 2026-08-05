@@ -26,7 +26,7 @@ export function Assets() {
               <th>Equipment ID</th>
               <th>Type</th>
               <th>Model</th>
-              <th>Dealer</th>
+              <th>Customer</th>
               <th>Status</th>
               <th>Location</th>
               <th>Fuel</th>
@@ -39,7 +39,7 @@ export function Assets() {
                 <td className="font-medium">{asset.id}</td>
                 <td>{asset.type}</td>
                 <td>{asset.model}</td>
-                <td>{asset.dealerName}</td>
+                <td>{asset.customerName}</td>
                 <td>
                   <span className={`status-badge ${asset.status.toLowerCase()}`}>
                     {asset.status}

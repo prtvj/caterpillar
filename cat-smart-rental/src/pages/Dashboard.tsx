@@ -17,8 +17,8 @@ export function Dashboard() {
 
       <div className="kpi-grid">
         <KPICard 
-          title="Total Dealers" 
-          value={kpi.totalDealers} 
+          title="Total Customers" 
+          value={kpi.totalCustomers} 
           icon={Users} 
           subtitle="View all"
         />

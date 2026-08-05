@@ -6,7 +6,7 @@ import { Dashboard } from './pages/Dashboard';
 import { Assets } from './pages/Assets';
 import { RFID } from './pages/RFID';
 import { Recommendations } from './pages/Recommendations';
-import { Dealers } from './pages/Dealers';
+import { Customers } from './pages/Customers';
 import { LiveTracking } from './pages/LiveTracking';
 import { Agreements } from './pages/Agreements';
 import { Inventory } from './pages/Inventory';
@@ -47,7 +47,7 @@ function App() {
               <Route path="/assets" element={<Assets />} />
               <Route path="/rfid" element={<RFID />} />
               <Route path="/recommendations" element={<Recommendations />} />
-              <Route path="/dealers" element={<Dealers />} />
+              <Route path="/customers" element={<Customers />} />
               <Route path="/tracking" element={<LiveTracking />} />
               <Route path="/agreements" element={<Agreements />} />
               <Route path="/inventory" element={<Inventory />} />

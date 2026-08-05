@@ -1,9 +1,9 @@
 import { create } from 'zustand';
-import type { Asset, Dealer, Alert, KPI } from '../types';
+import type { Asset, Customer, Alert, KPI } from '../types';
 import { generateMockDealers, generateMockAssets, generateInitialAlerts } from '../utils/mockData';
 
 interface AppState {
-  dealers: Dealer[];
+  customers: Customer[];
   assets: Asset[];
   alerts: Alert[];
   kpi: KPI;
@@ -11,13 +11,13 @@ interface AppState {
   simulateTick: () => void;
 }
 
-const calculateKPI = (dealers: Dealer[], assets: Asset[]): KPI => {
+const calculateKPI = (customers: Customer[], assets: Asset[]): KPI => {
   const totalAssets = assets.length;
   const rentedAssets = assets.filter(a => a.status !== 'Maintenance').length;
   const idleAssets = assets.filter(a => a.status === 'Idle').length;
   
   return {
-    totalDealers: dealers.length,
+    totalCustomers: customers.length,
     totalAssets,
     rentedAssets,
     rentedPercentage: (rentedAssets / totalAssets) * 100,
@@ -30,11 +30,11 @@ const calculateKPI = (dealers: Dealer[], assets: Asset[]): KPI => {
 };
 
 export const useStore = create<AppState>((set) => ({
-  dealers: [],
+  customers: [],
   assets: [],
   alerts: [],
   kpi: {
-    totalDealers: 0,
+    totalCustomers: 0,
     totalAssets: 0,
     rentedAssets: 0,
     rentedPercentage: 0,
@@ -46,14 +46,14 @@ export const useStore = create<AppState>((set) => ({
   },
   
   initialize: () => {
-    const dealers = generateMockDealers();
-    const assets = generateMockAssets(200, dealers);
+    const customers = generateMockDealers();
+    const assets = generateMockAssets(200, customers);
     const alerts = generateInitialAlerts();
     set({
-      dealers,
+      customers,
       assets,
       alerts,
-      kpi: calculateKPI(dealers, assets)
+      kpi: calculateKPI(customers, assets)
     });
   },
 
@@ -79,7 +79,7 @@ export const useStore = create<AppState>((set) => ({
 
     return {
       assets: updatedAssets,
-      kpi: calculateKPI(state.dealers, updatedAssets)
+      kpi: calculateKPI(state.customers, updatedAssets)
     };
   })
 }));

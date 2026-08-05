@@ -1,6 +1,6 @@
 export type MachineStatus = 'Running' | 'Idle' | 'Maintenance' | 'Overdue';
 
-export interface Dealer {
+export interface Customer {
   id: string;
   name: string;
   contactPerson: string;
@@ -16,8 +16,8 @@ export interface Asset {
   id: string;
   type: string;
   model: string;
-  dealerId: string;
-  dealerName: string;
+  customerId: string;
+  customerName: string;
   status: MachineStatus;
   location: string; // e.g. "Mumbai, MH"
   coordinates: [number, number]; // [lat, lng]
@@ -38,7 +38,7 @@ export interface Alert {
 }
 
 export interface KPI {
-  totalDealers: number;
+  totalCustomers: number;
   totalAssets: number;
   rentedAssets: number;
   rentedPercentage: number;

@@ -19,7 +19,7 @@ import './Sidebar.css';
 
 const navItems = [
   { name: 'Dashboard', path: '/', icon: LayoutDashboard },
-  { name: 'Dealers', path: '/dealers', icon: Users },
+  { name: 'Customers', path: '/customers', icon: Users },
   { name: 'Assets', path: '/assets', icon: Tractor },
   { name: 'RFID Check-In/Out', path: '/rfid', icon: ScanLine },
   { name: 'Live Tracking', path: '/tracking', icon: Map },
