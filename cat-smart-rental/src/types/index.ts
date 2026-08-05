@@ -26,6 +26,14 @@ export interface Asset {
   engineHours: number;
   idleHours: number;
   lastUpdated: string;
+  // newly added tracking fields
+  siteId?: string;
+  checkInDate?: string;
+  checkOutDate?: string;
+  engineHoursPerDay?: number;
+  idleHoursPerDay?: number;
+  rentalDays?: number;
+  lastOperatorId?: string;
 }
 
 export interface Alert {

@@ -37,14 +37,44 @@ const coordinatesList: [number, number][] = [
   [19.0760, 72.8777], [28.7041, 77.1025], [23.0225, 72.5714], [18.5204, 73.8567], [26.8467, 80.9462], [12.9716, 77.5946], [23.2599, 77.4126]
 ];
 
+const areas: Record<string, string[]> = {
+  'Mumbai, MH': ['Andheri', 'Bandra', 'Borivali', 'Dadar'],
+  'Delhi, DL': ['Connaught Place', 'Karol Bagh', 'Dwarka', 'Saket'],
+  'Ahmedabad, GJ': ['Navrangpura', 'Satellite', 'Bopal', 'Vastrapur'],
+  'Pune, MH': ['Koregaon Park', 'Kalyani Nagar', 'Viman Nagar', 'Hinjewadi'],
+  'Lucknow, UP': ['Gomti Nagar', 'Hazratganj', 'Indira Nagar', 'Aliganj'],
+  'Bengaluru, KA': ['Koramangala', 'Indiranagar', 'Whitefield', 'HSR Layout'],
+  'Bhopal, MP': ['Arera Colony', 'MP Nagar', 'Bairagarh', 'Kolar Road']
+};
+
 export const generateMockAssets = (count: number, customers: Customer[]): Asset[] => {
   const assets: Asset[] = [];
-  for (let i = 1; i <= count; i++) {
+  
+  const hardcoded = [
+    { id: 'EQX1001', type: 'Excavator', siteId: 'S003', checkInDate: '2025-04-01', checkOutDate: '2025-04-16', engineHoursPerDay: 1.5, idleHoursPerDay: 10, rentalDays: 15, lastOperatorId: 'OP101' },
+    { id: 'EQX1002', type: 'Crane', siteId: 'NULL', checkInDate: '2025-03-10', checkOutDate: '2025-03-30', engineHoursPerDay: 0, idleHoursPerDay: 11, rentalDays: 20, lastOperatorId: 'NULL' },
+    { id: 'EQX1003', type: 'Bulldozer', siteId: 'S002', checkInDate: '2025-02-15', checkOutDate: '2025-03-11', engineHoursPerDay: 7.5, idleHoursPerDay: 0.5, rentalDays: 25, lastOperatorId: 'OP203' },
+    { id: 'EQX1004', type: 'Excavator', siteId: 'S004', checkInDate: '2025-05-05', checkOutDate: '2025-05-15', engineHoursPerDay: 2, idleHoursPerDay: 9, rentalDays: 10, lastOperatorId: 'OP106' },
+    { id: 'EQX1005', type: 'Bulldozer', siteId: 'S006', checkInDate: '2025-01-01', checkOutDate: '2025-01-31', engineHoursPerDay: 8, idleHoursPerDay: 0, rentalDays: 30, lastOperatorId: 'OP301' },
+    { id: 'EQX1006', type: 'Grader', siteId: 'S001', checkInDate: '2025-04-05', checkOutDate: '2025-04-23', engineHoursPerDay: 3, idleHoursPerDay: 6, rentalDays: 18, lastOperatorId: 'OP114' },
+    { id: 'EQX1007', type: 'Excavator', siteId: 'NULL', checkInDate: '2025-03-20', checkOutDate: '2025-04-01', engineHoursPerDay: 0, idleHoursPerDay: 12, rentalDays: 12, lastOperatorId: 'NULL' }
+  ];
+
+  for (let i = 0; i < count; i++) {
+    const isHardcoded = i < hardcoded.length;
+    const hData = isHardcoded ? hardcoded[i] : null;
+
     const typeIdx = Math.floor(Math.random() * machineTypes.length);
-    const locIdx = Math.floor(Math.random() * locations.length);
     const customer = customers[Math.floor(Math.random() * customers.length)];
+    const assignedCustomer = isHardcoded ? customers[0] : customer;
     
-    // Add some random offset to coords so they don't overlap exactly
+    const assignedLocation = assignedCustomer.location;
+    const localAreas = areas[assignedLocation] || ['Central'];
+    const assignedArea = localAreas[Math.floor(Math.random() * localAreas.length)];
+    
+    let custLocIdx = locations.indexOf(assignedLocation);
+    if (custLocIdx === -1) custLocIdx = 0;
+    
     const latOffset = (Math.random() - 0.5) * 0.5;
     const lngOffset = (Math.random() - 0.5) * 0.5;
     
@@ -53,21 +83,32 @@ export const generateMockAssets = (count: number, customers: Customer[]): Asset[
     if (rand > 0.6) status = 'Idle';
     if (rand > 0.85) status = 'Maintenance';
     if (rand > 0.95) status = 'Overdue';
+    
+    // Maintain consistent operator ID for a customer if possible, or use random
+    const opId = `OP${200 + i}`;
 
     assets.push({
-      id: `EQX${1000 + i}`,
-      type: machineTypes[typeIdx],
+      id: isHardcoded ? hData!.id : `EQX${1000 + i + 1}`,
+      type: isHardcoded ? hData!.type : machineTypes[typeIdx],
       model: machineModels[typeIdx],
-      customerId: customer.id,
-      customerName: customer.name,
-      status,
-      location: locations[locIdx],
-      coordinates: [coordinatesList[locIdx][0] + latOffset, coordinatesList[locIdx][1] + lngOffset],
-      operator: `OP${100 + i}`,
+      customerId: assignedCustomer.id,
+      customerName: assignedCustomer.name,
+      status: isHardcoded ? (hData!.engineHoursPerDay > 0 ? 'Running' : 'Idle') : status,
+      location: `${assignedArea}, ${assignedLocation}`,
+      coordinates: [coordinatesList[custLocIdx][0] + latOffset, coordinatesList[custLocIdx][1] + lngOffset],
+      operator: isHardcoded ? hData!.lastOperatorId : opId,
       fuelLevel: Math.floor(Math.random() * 100),
       engineHours: Math.floor(Math.random() * 5000),
       idleHours: Math.floor(Math.random() * 500),
-      lastUpdated: new Date().toISOString()
+      lastUpdated: new Date().toISOString(),
+      
+      siteId: isHardcoded ? hData!.siteId : `S00${Math.floor(Math.random() * 9) + 1}`,
+      checkInDate: isHardcoded ? hData!.checkInDate : `2025-0${Math.floor(Math.random() * 5) + 1}-01`,
+      checkOutDate: isHardcoded ? hData!.checkOutDate : `2025-0${Math.floor(Math.random() * 5) + 5}-15`,
+      engineHoursPerDay: isHardcoded ? hData!.engineHoursPerDay : parseFloat((Math.random() * 10).toFixed(1)),
+      idleHoursPerDay: isHardcoded ? hData!.idleHoursPerDay : parseFloat((Math.random() * 10).toFixed(1)),
+      rentalDays: isHardcoded ? hData!.rentalDays : Math.floor(Math.random() * 30) + 5,
+      lastOperatorId: isHardcoded ? hData!.lastOperatorId : opId
     });
   }
   return assets;
