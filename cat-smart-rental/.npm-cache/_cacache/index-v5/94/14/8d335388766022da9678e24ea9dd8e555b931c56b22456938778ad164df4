@@ -1,0 +1,2 @@
+
+bb6cf9438a6cb1a465a9bc20aeae48e8854225ea	{"key":"make-fetch-happen:request-cache:http://registry.npmjs.org/@rolldown%2fbinding-linux-x64-gnu","integrity":null,"time":1785952297356,"size":"0","metadata":{"time":1785952297356,"url":"http://registry.npmjs.org/@rolldown%2fbinding-linux-x64-gnu","reqHeaders":{"accept":"application/json"},"resHeaders":{"content-type":"text/plain;charset=UTF-8","date":"Wed, 05 Aug 2026 17:51:37 GMT","location":"https://registry.npmjs.org/@rolldown%2Fbinding-linux-x64-gnu"},"options":{"compress":true},"status":301}}

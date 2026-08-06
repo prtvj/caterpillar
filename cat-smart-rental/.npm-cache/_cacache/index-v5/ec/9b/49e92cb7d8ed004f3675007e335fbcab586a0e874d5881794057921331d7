@@ -1,0 +1,2 @@
+
+d9dffb9c171d791b5174f7edf4ad0b86d253c1da	{"key":"make-fetch-happen:request-cache:http://registry.npmjs.org/fsevents","integrity":null,"time":1785952291711,"size":"0","metadata":{"time":1785952291711,"url":"http://registry.npmjs.org/fsevents","reqHeaders":{"accept":"application/json"},"resHeaders":{"content-type":"text/plain;charset=UTF-8","date":"Wed, 05 Aug 2026 17:51:31 GMT","location":"https://registry.npmjs.org/fsevents"},"options":{"compress":true},"status":301}}

@@ -1,0 +1,2 @@
+
+8a5b36ce8073ba73579a7d63dd8936252e97f6eb	{"key":"make-fetch-happen:request-cache:http://registry.npmjs.org/victory-vendor","integrity":null,"time":1785952293144,"size":"0","metadata":{"time":1785952293144,"url":"http://registry.npmjs.org/victory-vendor","reqHeaders":{"accept":"application/json"},"resHeaders":{"content-type":"text/plain;charset=UTF-8","date":"Wed, 05 Aug 2026 17:51:32 GMT","location":"https://registry.npmjs.org/victory-vendor"},"options":{"compress":true},"status":301}}

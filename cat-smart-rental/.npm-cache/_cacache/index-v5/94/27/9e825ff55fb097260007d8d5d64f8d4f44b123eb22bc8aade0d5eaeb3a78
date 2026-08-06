@@ -1,0 +1,2 @@
+
+4eafaae82ef6fe7cc9f5fe08cf06ab74d69d018d	{"key":"make-fetch-happen:request-cache:http://registry.npmjs.org/@oxlint%2fbinding-linux-arm64-musl","integrity":null,"time":1785952292406,"size":"0","metadata":{"time":1785952292406,"url":"http://registry.npmjs.org/@oxlint%2fbinding-linux-arm64-musl","reqHeaders":{"accept":"application/json"},"resHeaders":{"content-type":"text/plain;charset=UTF-8","date":"Wed, 05 Aug 2026 17:51:32 GMT","location":"https://registry.npmjs.org/@oxlint%2Fbinding-linux-arm64-musl"},"options":{"compress":true},"status":301}}

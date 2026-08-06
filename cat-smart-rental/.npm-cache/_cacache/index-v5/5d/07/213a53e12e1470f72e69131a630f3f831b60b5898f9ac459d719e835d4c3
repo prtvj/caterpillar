@@ -1,0 +1,2 @@
+
+3440d7aa69da5382d96a4354b8ea03b30b298ff6	{"key":"make-fetch-happen:request-cache:http://registry.npmjs.org/lightningcss","integrity":null,"time":1785952291714,"size":"0","metadata":{"time":1785952291714,"url":"http://registry.npmjs.org/lightningcss","reqHeaders":{"accept":"application/json"},"resHeaders":{"content-type":"text/plain;charset=UTF-8","date":"Wed, 05 Aug 2026 17:51:31 GMT","location":"https://registry.npmjs.org/lightningcss"},"options":{"compress":true},"status":301}}

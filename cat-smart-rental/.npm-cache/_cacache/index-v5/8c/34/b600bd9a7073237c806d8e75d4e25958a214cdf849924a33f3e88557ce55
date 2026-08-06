@@ -1,0 +1,2 @@
+
+22b71d8037cf2bf09e6845ff99dac0af9fcbbfef	{"key":"make-fetch-happen:request-cache:http://registry.npmjs.org/canvas","integrity":null,"time":1785952289008,"size":"0","metadata":{"time":1785952289008,"url":"http://registry.npmjs.org/canvas","reqHeaders":{"accept":"application/json"},"resHeaders":{"content-type":"text/plain;charset=UTF-8","date":"Wed, 05 Aug 2026 17:51:28 GMT","location":"https://registry.npmjs.org/canvas"},"options":{"compress":true},"status":301}}

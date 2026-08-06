@@ -1,0 +1,2 @@
+
+18d692ba2cb2e6ddf13dc7671b2b92edc283a6e1	{"key":"make-fetch-happen:request-cache:http://registry.npmjs.org/@vitest%2fbrowser","integrity":null,"time":1785952288362,"size":"0","metadata":{"time":1785952288362,"url":"http://registry.npmjs.org/@vitest%2fbrowser","reqHeaders":{"accept":"application/json"},"resHeaders":{"content-type":"text/plain;charset=UTF-8","date":"Wed, 05 Aug 2026 17:51:28 GMT","location":"https://registry.npmjs.org/@vitest%2Fbrowser"},"options":{"compress":true},"status":301}}

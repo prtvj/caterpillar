@@ -1,0 +1,2 @@
+
+9965a6e99798a8cd0a3843c52988a682f7a81cfd	{"key":"make-fetch-happen:request-cache:http://registry.npmjs.org/@oxlint%2fbinding-darwin-arm64","integrity":null,"time":1785952291532,"size":"0","metadata":{"time":1785952291532,"url":"http://registry.npmjs.org/@oxlint%2fbinding-darwin-arm64","reqHeaders":{"accept":"application/json"},"resHeaders":{"content-type":"text/plain;charset=UTF-8","date":"Wed, 05 Aug 2026 17:51:31 GMT","location":"https://registry.npmjs.org/@oxlint%2Fbinding-darwin-arm64"},"options":{"compress":true},"status":301}}

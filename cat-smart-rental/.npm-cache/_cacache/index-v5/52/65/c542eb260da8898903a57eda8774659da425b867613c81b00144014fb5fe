@@ -1,0 +1,2 @@
+
+310428f9828a2ada17a4b7f2df5a0247db9edb29	{"key":"make-fetch-happen:request-cache:http://registry.npmjs.org/@types%2fgeojson","integrity":null,"time":1785952291441,"size":"0","metadata":{"time":1785952291441,"url":"http://registry.npmjs.org/@types%2fgeojson","reqHeaders":{"accept":"application/json"},"resHeaders":{"content-type":"text/plain;charset=UTF-8","date":"Wed, 05 Aug 2026 17:51:31 GMT","location":"https://registry.npmjs.org/@types%2Fgeojson"},"options":{"compress":true},"status":301}}

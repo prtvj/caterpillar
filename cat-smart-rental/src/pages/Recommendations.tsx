@@ -63,29 +63,29 @@ export function Recommendations() {
       </div>
 
       <div style={{ marginBottom: '2rem' }}>
-        <h2 style={{ fontSize: '1.25rem', fontWeight: 600, marginBottom: '1rem', color: '#facc15', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+        <h2 style={{ fontSize: '1.25rem', fontWeight: 600, marginBottom: '1rem', color: 'var(--color-brand-yellow)', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
           <TrendingUp size={20} /> Demand Forecasting
         </h2>
         <DemandChart />
       </div>
 
       <div style={{ marginBottom: '2rem' }}>
-        <h2 style={{ fontSize: '1.25rem', fontWeight: 600, marginBottom: '1rem', color: '#facc15', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+        <h2 style={{ fontSize: '1.25rem', fontWeight: 600, marginBottom: '1rem', color: 'var(--color-brand-yellow)', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
           <Package size={20} /> Stock Quantity Overview
         </h2>
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(200px, 1fr))', gap: '1rem' }}>
           {stockSummary.map(summary => (
-            <div key={summary.type} style={{ backgroundColor: 'rgba(255, 255, 255, 0.05)', padding: '1rem', borderRadius: '8px', border: '1px solid rgba(255, 255, 255, 0.1)' }}>
+            <div key={summary.type} style={{ backgroundColor: 'var(--color-bg-panel)', padding: '1rem', borderRadius: '8px', border: '1px solid var(--color-border)' }}>
               <div style={{ fontSize: '1.1rem', fontWeight: 600, marginBottom: '0.5rem' }}>{summary.type}</div>
-              <div style={{ color: '#9ca3af', fontSize: '0.9rem' }}>
-                <span>Total: <strong style={{ color: 'white' }}>{summary.total}</strong></span>
+              <div style={{ color: 'var(--color-text-secondary)', fontSize: '0.9rem' }}>
+                <span>Total: <strong style={{ color: 'var(--color-text-primary)' }}>{summary.total}</strong></span>
               </div>
             </div>
           ))}
         </div>
       </div>
 
-      <h2 style={{ fontSize: '1.25rem', fontWeight: 600, marginBottom: '1rem', color: '#facc15' }}>Transfer Opportunities</h2>
+      <h2 style={{ fontSize: '1.25rem', fontWeight: 600, marginBottom: '1rem', color: 'var(--color-brand-yellow)' }}>Transfer Opportunities</h2>
       
       {transferOpportunities.length === 0 ? (
         <div className="rec-card">
@@ -125,9 +125,9 @@ export function Recommendations() {
                       width: '100%', 
                       padding: '0.5rem', 
                       marginTop: '0.5rem', 
-                      backgroundColor: 'rgba(0,0,0,0.2)', 
-                      border: '1px solid rgba(255,255,255,0.1)', 
-                      color: 'white',
+                      backgroundColor: 'var(--color-bg-base)', 
+                      border: '1px solid var(--color-border)', 
+                      color: 'var(--color-text-primary)',
                       borderRadius: '4px'
                     }}
                     value={selectedCustomers[opp.asset.id] || ''}

@@ -1,0 +1,2 @@
+
+f8aa904c54f56ef515340656b7130002c884840b	{"key":"make-fetch-happen:request-cache:http://registry.npmjs.org/@types%2fd3-timer","integrity":null,"time":1785952296194,"size":"0","metadata":{"time":1785952296194,"url":"http://registry.npmjs.org/@types%2fd3-timer","reqHeaders":{"accept":"application/json"},"resHeaders":{"content-type":"text/plain;charset=UTF-8","date":"Wed, 05 Aug 2026 17:51:35 GMT","location":"https://registry.npmjs.org/@types%2Fd3-timer"},"options":{"compress":true},"status":301}}

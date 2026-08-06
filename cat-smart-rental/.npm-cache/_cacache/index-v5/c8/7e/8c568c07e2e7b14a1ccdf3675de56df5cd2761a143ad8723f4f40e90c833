@@ -1,0 +1,2 @@
+
+efdbfab0ebe542e6bdcedacd2d481f768bb8bbd2	{"key":"make-fetch-happen:request-cache:http://registry.npmjs.org/@vitest%2fbrowser-playwright","integrity":null,"time":1785952286641,"size":"0","metadata":{"time":1785952286641,"url":"http://registry.npmjs.org/@vitest%2fbrowser-playwright","reqHeaders":{"accept":"application/json"},"resHeaders":{"content-type":"text/plain;charset=UTF-8","date":"Wed, 05 Aug 2026 17:51:26 GMT","location":"https://registry.npmjs.org/@vitest%2Fbrowser-playwright"},"options":{"compress":true},"status":301}}

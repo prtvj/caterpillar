@@ -13,6 +13,8 @@ interface AppState {
   checkInOutAsset: (assetId: string, action: 'checkin' | 'checkout') => void;
   markAlertAsRead: (alertId: string) => void;
   markAllAlertsAsRead: () => void;
+  theme: 'light' | 'dark';
+  toggleTheme: () => void;
 }
 
 const calculateKPI = (customers: Customer[], assets: Asset[]): KPI => {
@@ -48,6 +50,8 @@ export const useStore = create<AppState>((set) => ({
     maintenanceDue: 0,
     todayRevenue: 0
   },
+  theme: 'light',
+  toggleTheme: () => set((state) => ({ theme: state.theme === 'light' ? 'dark' : 'light' })),
   
   initialize: () => {
     const customers = generateMockDealers();

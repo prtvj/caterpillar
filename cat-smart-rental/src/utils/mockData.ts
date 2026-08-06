@@ -88,8 +88,9 @@ export const generateMockAssets = (count: number, customers: Customer[]): Asset[
     let custLocIdx = locations.indexOf(assignedLocation);
     if (custLocIdx === -1) custLocIdx = 0;
     
-    const latOffset = (Math.random() - 0.5) * 0.5;
-    const lngOffset = (Math.random() - 0.5) * 0.5;
+    // Reduce spread from 0.5 degrees (55km) to 0.05 degrees (5.5km) so it looks accurate on the map
+    const latOffset = (Math.random() - 0.5) * 0.05;
+    const lngOffset = (Math.random() - 0.5) * 0.05;
     
     let status: MachineStatus = 'Running';
     const rand = Math.random();

@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Scan, CheckCircle, XCircle, Search } from 'lucide-react';
+import { QrCode, CheckCircle, XCircle, Search } from 'lucide-react';
 import './RFID.css';
 import { useStore } from '../store/useStore';
 import type { Asset } from '../types';
@@ -24,22 +24,18 @@ export function RFID() {
     setScannedAsset(null);
     
     setTimeout(() => {
-      // Simulate successful scan 80% of the time
-      if (Math.random() > 0.2) {
-        // Find an asset that matches the criteria
-        const validAssets = assets.filter(a => activeTab === 'checkout' ? a.status === 'Idle' : a.status === 'Running');
-        
-        if (validAssets.length > 0) {
-          const randomAsset = validAssets[Math.floor(Math.random() * validAssets.length)];
-          setScannedAsset(randomAsset);
-          setScanState('success');
-          // Execute state change
-          checkInOutAsset(randomAsset.id, activeTab);
-        } else {
-          // No valid assets to scan for this action
-          setScanState('error');
-        }
+      // Simulate successful scan
+      // Find an asset that matches the criteria
+      const validAssets = assets.filter(a => activeTab === 'checkout' ? a.status === 'Idle' : a.status === 'Running');
+      
+      if (validAssets.length > 0) {
+        const randomAsset = validAssets[Math.floor(Math.random() * validAssets.length)];
+        setScannedAsset(randomAsset);
+        setScanState('success');
+        // Execute state change
+        checkInOutAsset(randomAsset.id, activeTab);
       } else {
+        // No valid assets to scan for this action
         setScanState('error');
       }
       
@@ -55,7 +51,7 @@ export function RFID() {
   return (
     <div className="rfid-container">
       <div className="page-header">
-        <h1 className="page-title">RFID Check-In / Out</h1>
+        <h1 className="page-title">QR Code Check-In / Out</h1>
       </div>
 
       <div className="rfid-grid">
@@ -77,15 +73,15 @@ export function RFID() {
           
           <div className="scan-area">
             <div className={`scanner-animation ${scanState}`}>
-              <Scan size={80} strokeWidth={1} />
+              <QrCode size={80} strokeWidth={1} />
               {scanState === 'scanning' && <div className="scan-line"></div>}
             </div>
             
             <p className="scan-instruction">
-              {scanState === 'idle' && `Bring equipment tag near scanner to ${activeTab === 'checkin' ? 'return' : 'dispatch'}`}
+              {scanState === 'idle' && `Scan equipment QR code to ${activeTab === 'checkin' ? 'return' : 'dispatch'}`}
               {scanState === 'scanning' && 'Scanning...'}
               {scanState === 'success' && 'Scan Successful'}
-              {scanState === 'error' && 'Unrecognized Tag / Invalid Action'}
+              {scanState === 'error' && 'Invalid QR Code / Invalid Action'}
             </p>
 
             <button 
@@ -100,7 +96,7 @@ export function RFID() {
 
         <div className="widget-card details-panel">
           <div className="widget-header">
-            <h3 className="widget-title">Scanned Tag Details</h3>
+            <h3 className="widget-title">Scanned QR Details</h3>
           </div>
           {scanState === 'success' && scannedAsset ? (
             <div className="tag-details fade-in">
@@ -129,7 +125,7 @@ export function RFID() {
                   <XCircle size={20} />
                   <div>
                     <strong>Scan Failed</strong>
-                    <div className="text-xs">Tag not recognized or no valid asset available for this action.</div>
+                    <div className="text-xs">QR code not recognized or no valid asset available for this action.</div>
                   </div>
                </div>
              </div>

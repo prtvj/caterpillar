@@ -1,6 +1,6 @@
 import { useState, useRef, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Search, Bell, User, AlertCircle, AlertTriangle, Info, Clock } from 'lucide-react';
+import { Search, Bell, User, AlertCircle, AlertTriangle, Info, Clock, Sun, Moon } from 'lucide-react';
 import { useStore } from '../store/useStore';
 import './Topbar.css';
 
@@ -19,6 +19,8 @@ export function Topbar() {
 
   const alerts = useStore((state) => state.alerts);
   const markAlertAsRead = useStore((state) => state.markAlertAsRead);
+  const theme = useStore((state) => state.theme);
+  const toggleTheme = useStore((state) => state.toggleTheme);
   const unreadAlerts = alerts.filter(a => !a.read);
   
   const [showNotifications, setShowNotifications] = useState(false);
@@ -65,6 +67,10 @@ export function Topbar() {
           <div className="pulse-dot"></div>
           <span>Live</span>
         </div>
+
+        <button className="icon-btn theme-toggle" onClick={toggleTheme} title="Toggle Theme">
+          {theme === 'light' ? <Moon size={20} /> : <Sun size={20} />}
+        </button>
 
         <div className="notification-wrapper" ref={dropdownRef}>
           <button className="icon-btn" onClick={() => setShowNotifications(!showNotifications)}>

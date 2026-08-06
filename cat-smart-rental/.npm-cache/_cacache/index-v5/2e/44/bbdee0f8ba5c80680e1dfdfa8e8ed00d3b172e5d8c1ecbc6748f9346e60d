@@ -1,0 +1,2 @@
+
+0c4801411fe01d0b18d8ea0145f2cefbdd33eb58	{"key":"make-fetch-happen:request-cache:http://registry.npmjs.org/less","integrity":null,"time":1785952289484,"size":"0","metadata":{"time":1785952289484,"url":"http://registry.npmjs.org/less","reqHeaders":{"accept":"application/json"},"resHeaders":{"content-type":"text/plain;charset=UTF-8","date":"Wed, 05 Aug 2026 17:51:29 GMT","location":"https://registry.npmjs.org/less"},"options":{"compress":true},"status":301}}

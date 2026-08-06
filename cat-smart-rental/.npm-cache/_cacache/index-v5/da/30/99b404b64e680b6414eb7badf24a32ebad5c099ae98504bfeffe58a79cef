@@ -1,0 +1,2 @@
+
+d13b670ed57ae04f321380516cb056d6d8143c01	{"key":"make-fetch-happen:request-cache:http://registry.npmjs.org/yaml","integrity":null,"time":1785952290390,"size":"0","metadata":{"time":1785952290390,"url":"http://registry.npmjs.org/yaml","reqHeaders":{"accept":"application/json"},"resHeaders":{"content-type":"text/plain;charset=UTF-8","date":"Wed, 05 Aug 2026 17:51:30 GMT","location":"https://registry.npmjs.org/yaml"},"options":{"compress":true},"status":301}}

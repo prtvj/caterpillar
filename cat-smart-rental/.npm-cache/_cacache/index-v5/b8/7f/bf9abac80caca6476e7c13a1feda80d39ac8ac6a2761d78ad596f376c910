@@ -1,0 +1,2 @@
+
+012f127397bc30dd396f9723b6f8aba878f4392a	{"key":"make-fetch-happen:request-cache:http://registry.npmjs.org/webdriverio","integrity":null,"time":1785952287687,"size":"0","metadata":{"time":1785952287686,"url":"http://registry.npmjs.org/webdriverio","reqHeaders":{"accept":"application/json"},"resHeaders":{"content-type":"text/plain;charset=UTF-8","date":"Wed, 05 Aug 2026 17:51:27 GMT","location":"https://registry.npmjs.org/webdriverio"},"options":{"compress":true},"status":301}}

@@ -1,0 +1,2 @@
+
+673722dd3d099a22d821545e7d81fd164adef440	{"key":"make-fetch-happen:request-cache:http://registry.npmjs.org/@vitejs%2fdevtools","integrity":null,"time":1785952285520,"size":"0","metadata":{"time":1785952285520,"url":"http://registry.npmjs.org/@vitejs%2fdevtools","reqHeaders":{"accept":"application/json"},"resHeaders":{"content-type":"text/plain;charset=UTF-8","date":"Wed, 05 Aug 2026 17:51:25 GMT","location":"https://registry.npmjs.org/@vitejs%2Fdevtools"},"options":{"compress":true},"status":301}}

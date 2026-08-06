@@ -1,0 +1,2 @@
+
+81b24f8b32e238fdb7b811af57e3b061cc87fa2d	{"key":"make-fetch-happen:request-cache:http://registry.npmjs.org/@rolldown%2fbinding-darwin-x64","integrity":null,"time":1785952297195,"size":"0","metadata":{"time":1785952297195,"url":"http://registry.npmjs.org/@rolldown%2fbinding-darwin-x64","reqHeaders":{"accept":"application/json"},"resHeaders":{"content-type":"text/plain;charset=UTF-8","date":"Wed, 05 Aug 2026 17:51:36 GMT","location":"https://registry.npmjs.org/@rolldown%2Fbinding-darwin-x64"},"options":{"compress":true},"status":301}}

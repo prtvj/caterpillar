@@ -1,0 +1,2 @@
+
+0c20ddd936dc05ff05513e33276435d55e952bd5	{"key":"make-fetch-happen:request-cache:http://registry.npmjs.org/@oxlint%2fbinding-linux-s390x-gnu","integrity":null,"time":1785952292175,"size":"0","metadata":{"time":1785952292175,"url":"http://registry.npmjs.org/@oxlint%2fbinding-linux-s390x-gnu","reqHeaders":{"accept":"application/json"},"resHeaders":{"content-type":"text/plain;charset=UTF-8","date":"Wed, 05 Aug 2026 17:51:31 GMT","location":"https://registry.npmjs.org/@oxlint%2Fbinding-linux-s390x-gnu"},"options":{"compress":true},"status":301}}

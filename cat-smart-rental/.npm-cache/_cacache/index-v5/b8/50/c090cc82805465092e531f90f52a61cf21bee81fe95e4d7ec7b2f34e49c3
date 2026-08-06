@@ -1,0 +1,2 @@
+
+fc85d7f797f2dc8d83a6d96ccea7426d786497e0	{"key":"make-fetch-happen:request-cache:http://registry.npmjs.org/playwright","integrity":null,"time":1785952286984,"size":"0","metadata":{"time":1785952286984,"url":"http://registry.npmjs.org/playwright","reqHeaders":{"accept":"application/json"},"resHeaders":{"content-type":"text/plain;charset=UTF-8","date":"Wed, 05 Aug 2026 17:51:26 GMT","location":"https://registry.npmjs.org/playwright"},"options":{"compress":true},"status":301}}

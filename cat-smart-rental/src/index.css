@@ -1,39 +1,39 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
 
-:root {
+:root, body.theme-light {
   --font-family: 'Inter', system-ui, -apple-system, sans-serif;
   
   /* Brand Colors */
-  --color-brand-yellow: #FFCD11;
-  --color-brand-yellow-hover: #E5B70F;
-  --color-brand-yellow-transparent: rgba(255, 205, 17, 0.15);
+  --color-brand-yellow: #FFCC00; /* Official Cat Yellow */
+  --color-brand-yellow-hover: #E6B800;
+  --color-brand-yellow-transparent: rgba(255, 204, 0, 0.15);
   
-  /* Background Colors */
-  --color-bg-base: #121212;
-  --color-bg-panel: #1E1E1E;
-  --color-bg-card: #252525;
-  --color-bg-hover: #2C2C2C;
-  --color-bg-active: #333333;
+  /* Background Colors - Light */
+  --color-bg-base: #F4F4F4; /* Light grey base typical of corporate dashboards */
+  --color-bg-panel: #FFFFFF;
+  --color-bg-card: #FFFFFF;
+  --color-bg-hover: #E0E0E0;
+  --color-bg-active: #D6D6D6;
 
   /* Border Colors */
-  --color-border: #333333;
-  --color-border-light: #444444;
+  --color-border: #DCDCDC;
+  --color-border-light: #EEEEEE;
 
-  /* Text Colors */
-  --color-text-primary: #FFFFFF;
-  --color-text-secondary: #AAAAAA;
-  --color-text-muted: #777777;
-  --color-text-inverse: #000000;
+  /* Text Colors - Light */
+  --color-text-primary: #1A1A1A; /* Near black */
+  --color-text-secondary: #555555;
+  --color-text-muted: #888888;
+  --color-text-inverse: #FFFFFF;
 
-  /* Status Colors */
-  --color-status-success: #00C853;
-  --color-status-success-bg: rgba(0, 200, 83, 0.15);
-  --color-status-warning: #FF9100;
-  --color-status-warning-bg: rgba(255, 145, 0, 0.15);
-  --color-status-error: #FF1744;
-  --color-status-error-bg: rgba(255, 23, 68, 0.15);
-  --color-status-info: #00B0FF;
-  --color-status-info-bg: rgba(0, 176, 255, 0.15);
+  /* Status Colors (Same for both) */
+  --color-status-success: #008A00;
+  --color-status-success-bg: rgba(0, 138, 0, 0.1);
+  --color-status-warning: #FF8C00;
+  --color-status-warning-bg: rgba(255, 140, 0, 0.1);
+  --color-status-error: #D90000;
+  --color-status-error-bg: rgba(217, 0, 0, 0.1);
+  --color-status-info: #0066CC;
+  --color-status-info-bg: rgba(0, 102, 204, 0.1);
   
   /* Spacing */
   --spacing-xs: 0.25rem;
@@ -42,18 +42,43 @@
   --spacing-lg: 1.5rem;
   --spacing-xl: 2rem;
 
-  /* Border Radius */
-  --radius-sm: 4px;
-  --radius-md: 8px;
-  --radius-lg: 12px;
+  /* Border Radius - Cat is very industrial, minimal rounding */
+  --radius-sm: 2px;
+  --radius-md: 4px;
+  --radius-lg: 6px;
   --radius-full: 9999px;
 
-  /* Shadows */
-  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.5);
-  --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.5);
-  --shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.5);
+  /* Shadows - Flat UI */
+  --shadow-sm: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+  --shadow-md: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
+  --shadow-lg: 0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23);
+  --shadow-glow: none;
 }
 
+body.theme-dark {
+  /* Background Colors - Dark */
+  --color-bg-base: #121212;
+  --color-bg-panel: #1E1E1E;
+  --color-bg-card: #252525;
+  --color-bg-hover: #333333;
+  --color-bg-active: #404040;
+
+  /* Border Colors */
+  --color-border: #333333;
+  --color-border-light: #444444;
+
+  /* Text Colors - Dark */
+  --color-text-primary: #FFFFFF;
+  --color-text-secondary: #AAAAAA;
+  --color-text-muted: #777777;
+  --color-text-inverse: #000000;
+  
+  --shadow-sm: 0 1px 3px rgba(0,0,0,0.5);
+  --shadow-md: 0 3px 6px rgba(0,0,0,0.6);
+  --shadow-lg: 0 10px 20px rgba(0,0,0,0.7);
+}
+
+/* Base Rest */
 * {
   box-sizing: border-box;
   margin: 0;
@@ -62,11 +87,12 @@
 
 body {
   font-family: var(--font-family);
-  background-color: var(--color-bg-base);
+  background: var(--color-bg-base);
   color: var(--color-text-primary);
   line-height: 1.5;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  transition: background-color 0.3s ease, color 0.3s ease;
 }
 
 a {
@@ -79,6 +105,16 @@ button {
   cursor: pointer;
   border: none;
   background: none;
+  transition: all 0.2s ease;
+}
+
+button:active {
+  transform: translateY(1px);
+}
+
+button:focus-visible {
+  outline: 2px solid var(--color-brand-yellow);
+  outline-offset: 2px;
 }
 
 /* Scrollbar Styling */
@@ -98,9 +134,80 @@ button {
 }
 
 /* Leaflet dark map fix */
-.leaflet-layer,
-.leaflet-control-zoom-in,
-.leaflet-control-zoom-out,
-.leaflet-control-attribution {
+body.theme-dark .leaflet-layer,
+body.theme-dark .leaflet-control-zoom-in,
+body.theme-dark .leaflet-control-zoom-out,
+body.theme-dark .leaflet-control-attribution {
   filter: invert(100%) hue-rotate(180deg) brightness(95%) contrast(90%);
+}
+
+/* Industrial Solid Cards (Remove Glassmorphism) */
+.widget-card, .topbar, .sidebar, .modal-content, .notification-dropdown {
+  background: var(--color-bg-card) !important;
+  border: 1px solid var(--color-border) !important;
+  box-shadow: var(--shadow-sm) !important;
+  border-radius: var(--radius-md) !important; /* Sharp/industrial corners */
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+}
+
+.widget-card {
+  /* Solid top border in Cat Yellow for extra brand feel */
+  border-top: 3px solid var(--color-brand-yellow) !important;
+}
+
+.widget-card:hover {
+  box-shadow: var(--shadow-md) !important;
+  transform: translateY(-2px);
+}
+
+/* Cat Button Overrides */
+button.icon-btn {
+  background: var(--color-bg-hover) !important;
+  border: 1px solid var(--color-border) !important;
+  color: var(--color-text-primary) !important;
+  border-radius: var(--radius-md) !important; /* Square-ish icons */
+  box-shadow: none !important;
+}
+button.icon-btn:hover {
+  background: var(--color-bg-active) !important;
+  color: var(--color-text-primary) !important;
+  border-color: var(--color-border-light) !important;
+}
+
+button.btn-scan, .btn-save {
+  background: var(--color-brand-yellow) !important;
+  color: #000 !important;
+  font-weight: 800 !important;
+  text-transform: uppercase;
+  border-radius: var(--radius-sm) !important;
+  box-shadow: var(--shadow-sm) !important;
+  letter-spacing: 1px;
+}
+button.btn-scan:hover:not(.disabled), .btn-save:hover {
+  background: var(--color-brand-yellow-hover) !important;
+  box-shadow: var(--shadow-md) !important;
+}
+
+button.rfid-tab.active {
+  background: var(--color-bg-hover);
+  border-bottom-color: var(--color-brand-yellow) !important;
+  text-shadow: none;
+}
+
+/* Base button defaults */
+.btn, button:not([class]) {
+  background: var(--color-bg-hover);
+  padding: 0.6rem 1.25rem;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--color-border);
+  color: var(--color-text-primary);
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-weight: 600;
+}
+.btn:hover, button:not([class]):hover {
+  background: var(--color-bg-active);
+  border-color: var(--color-border-light);
 }

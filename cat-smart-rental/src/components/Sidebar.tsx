@@ -20,14 +20,9 @@ const navItems = [
   { name: 'Dashboard', path: '/', icon: LayoutDashboard },
   { name: 'Customers', path: '/customers', icon: Users },
   { name: 'Assets', path: '/assets', icon: Tractor },
-  { name: 'RFID Check-In/Out', path: '/rfid', icon: ScanLine },
-  { name: 'Live Tracking', path: '/tracking', icon: Map },
-  { name: 'Agreements', path: '/agreements', icon: FileText },
-  { name: 'Usage Analytics', path: '/analytics', icon: BarChart3 },
+  { name: 'QR Scanner', path: '/rfid', icon: ScanLine },
   { name: 'AI Recommendations', path: '/recommendations', icon: Lightbulb },
   { name: 'Alerts & Notifications', path: '/alerts', icon: Bell, showBadge: true },
-  { name: 'Maintenance', path: '/maintenance', icon: Wrench },
-  { name: 'Reports', path: '/reports', icon: FileText },
   { name: 'Settings', path: '/settings', icon: Settings },
 ];
 

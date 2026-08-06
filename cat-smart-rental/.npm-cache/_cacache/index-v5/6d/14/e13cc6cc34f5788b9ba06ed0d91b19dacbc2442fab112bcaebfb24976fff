@@ -1,0 +1,2 @@
+
+b9ad67041adbbb32371795781f0817f27a601fc3	{"key":"make-fetch-happen:request-cache:http://registry.npmjs.org/tsx","integrity":null,"time":1785952290291,"size":"0","metadata":{"time":1785952290291,"url":"http://registry.npmjs.org/tsx","reqHeaders":{"accept":"application/json"},"resHeaders":{"content-type":"text/plain;charset=UTF-8","date":"Wed, 05 Aug 2026 17:51:30 GMT","location":"https://registry.npmjs.org/tsx"},"options":{"compress":true},"status":301}}

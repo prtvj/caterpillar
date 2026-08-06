@@ -7,14 +7,9 @@ import { Assets } from './pages/Assets';
 import { RFID } from './pages/RFID';
 import { Recommendations } from './pages/Recommendations';
 import { Customers } from './pages/Customers';
-import { LiveTracking } from './pages/LiveTracking';
-import { Agreements } from './pages/Agreements';
 import { Inventory } from './pages/Inventory';
-import { Analytics } from './pages/Analytics';
 import { Forecast } from './pages/Forecast';
 import { AlertsPage } from './pages/AlertsPage';
-import { Maintenance } from './pages/Maintenance';
-import { Reports } from './pages/Reports';
 import { Settings } from './pages/Settings';
 
 import { useStore } from './store/useStore';
@@ -23,6 +18,11 @@ import './App.css';
 function App() {
   const initialize = useStore((state) => state.initialize);
   const simulateTick = useStore((state) => state.simulateTick);
+  const theme = useStore((state) => state.theme);
+
+  useEffect(() => {
+    document.body.className = `theme-${theme}`;
+  }, [theme]);
 
   useEffect(() => {
     initialize();
@@ -48,14 +48,9 @@ function App() {
               <Route path="/rfid" element={<RFID />} />
               <Route path="/recommendations" element={<Recommendations />} />
               <Route path="/customers" element={<Customers />} />
-              <Route path="/tracking" element={<LiveTracking />} />
-              <Route path="/agreements" element={<Agreements />} />
               <Route path="/inventory" element={<Inventory />} />
-              <Route path="/analytics" element={<Analytics />} />
               <Route path="/forecast" element={<Forecast />} />
               <Route path="/alerts" element={<AlertsPage />} />
-              <Route path="/maintenance" element={<Maintenance />} />
-              <Route path="/reports" element={<Reports />} />
               <Route path="/settings" element={<Settings />} />
 
               {/* Other routes will be added here */}

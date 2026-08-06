@@ -1,0 +1,2 @@
+
+3a302dda9e502498aa53548b8c78d3f63c65361c	{"key":"make-fetch-happen:request-cache:http://registry.npmjs.org/decimal.js-light","integrity":null,"time":1785952293147,"size":"0","metadata":{"time":1785952293147,"url":"http://registry.npmjs.org/decimal.js-light","reqHeaders":{"accept":"application/json"},"resHeaders":{"content-type":"text/plain;charset=UTF-8","date":"Wed, 05 Aug 2026 17:51:32 GMT","location":"https://registry.npmjs.org/decimal.js-light"},"options":{"compress":true},"status":301}}

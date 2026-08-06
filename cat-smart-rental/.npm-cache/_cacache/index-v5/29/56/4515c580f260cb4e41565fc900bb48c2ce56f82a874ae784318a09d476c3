@@ -1,0 +1,2 @@
+
+bd9d748984429e8056efc46fbac309ff17acb822	{"key":"make-fetch-happen:request-cache:http://registry.npmjs.org/sass-embedded","integrity":null,"time":1785952289704,"size":"0","metadata":{"time":1785952289704,"url":"http://registry.npmjs.org/sass-embedded","reqHeaders":{"accept":"application/json"},"resHeaders":{"content-type":"text/plain;charset=UTF-8","date":"Wed, 05 Aug 2026 17:51:29 GMT","location":"https://registry.npmjs.org/sass-embedded"},"options":{"compress":true},"status":301}}

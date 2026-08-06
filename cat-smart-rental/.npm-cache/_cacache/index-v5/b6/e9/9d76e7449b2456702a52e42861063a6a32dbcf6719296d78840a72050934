@@ -1,0 +1,2 @@
+
+2805cb03441c190bfaf0e7b9f5a740d9aa019139	{"key":"make-fetch-happen:request-cache:http://registry.npmjs.org/stylus","integrity":null,"time":1785952289810,"size":"0","metadata":{"time":1785952289810,"url":"http://registry.npmjs.org/stylus","reqHeaders":{"accept":"application/json"},"resHeaders":{"content-type":"text/plain;charset=UTF-8","date":"Wed, 05 Aug 2026 17:51:29 GMT","location":"https://registry.npmjs.org/stylus"},"options":{"compress":true},"status":301}}

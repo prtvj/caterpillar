@@ -1,13 +1,15 @@
 import { Users, Tractor, Clock, AlertCircle, Wrench, IndianRupee } from 'lucide-react';
+import { useSearchParams } from 'react-router-dom';
 import { useStore } from '../store/useStore';
 import { KPICard } from '../components/KPICard';
 import { LiveMap } from '../components/LiveMap';
 import { AlertWidget } from '../components/AlertWidget';
-import { UsageChart } from '../components/UsageChart';
 import './Dashboard.css';
 
 export function Dashboard() {
   const kpi = useStore((state) => state.kpi);
+  const [searchParams] = useSearchParams();
+  const focusId = searchParams.get('focus') || undefined;
 
   return (
     <div className="dashboard-container">
@@ -72,24 +74,11 @@ export function Dashboard() {
             <h3 className="widget-title">Live Fleet Overview</h3>
           </div>
           <div className="map-wrapper">
-            <LiveMap />
+            <LiveMap focusedAssetId={focusId} showAllPins={true} />
           </div>
         </div>
         <div className="alerts-section">
           <AlertWidget limit={5} />
-        </div>
-      </div>
-
-      <div className="charts-grid">
-        <UsageChart />
-        {/* Placeholders for other charts to complete the row */}
-        <div className="widget-card">
-          <div className="widget-header"><h3 className="widget-title">Fuel Usage</h3></div>
-          <div style={{padding: '2rem', textAlign: 'center', color: 'var(--color-text-muted)'}}>Chart Coming Soon</div>
-        </div>
-        <div className="widget-card">
-          <div className="widget-header"><h3 className="widget-title">Demand Forecast</h3></div>
-          <div style={{padding: '2rem', textAlign: 'center', color: 'var(--color-text-muted)'}}>Chart Coming Soon</div>
         </div>
       </div>
     </div>

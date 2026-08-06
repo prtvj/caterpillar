@@ -1,0 +1,2 @@
+
+90704b7d980aa162c1cc62e4ec77bdd27edf4bb5	{"key":"make-fetch-happen:request-cache:http://registry.npmjs.org/internmap","integrity":null,"time":1785952296334,"size":"0","metadata":{"time":1785952296334,"url":"http://registry.npmjs.org/internmap","reqHeaders":{"accept":"application/json"},"resHeaders":{"content-type":"text/plain;charset=UTF-8","date":"Wed, 05 Aug 2026 17:51:36 GMT","location":"https://registry.npmjs.org/internmap"},"options":{"compress":true},"status":301}}
