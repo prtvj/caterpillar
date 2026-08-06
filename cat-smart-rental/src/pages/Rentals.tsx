@@ -27,6 +27,8 @@ export function Rentals() {
   const assets = useStore((state) => state.assets);
   const customers = useStore((state) => state.customers);
   const transferAsset = useStore((state) => state.transferAsset);
+  const addToCart = useStore((state) => state.addToCart);
+
 
   const [activeRentalTab, setActiveRentalTab] = useState<'catalog' | 'optimizer'>('catalog');
   const [selectedCategory, setSelectedCategory] = useState<string>('All');
@@ -511,9 +513,37 @@ export function Rentals() {
                   <Tag color="var(--color-brand-yellow)" size={24} />
                   {selectedVehicle.type} ({selectedVehicle.model}) Details
                 </h2>
-                <button className="modal-close-btn" onClick={() => setSelectedVehicle(null)}>
-                  <X size={26} />
-                </button>
+                <div style={{ display: 'flex', gap: '1rem', alignItems: 'center' }}>
+                  <button 
+                    className="action-btn primary"
+                    disabled={stock.available <= 0}
+                    style={{
+                      background: 'var(--color-brand-yellow)',
+                      color: 'var(--color-bg-primary)',
+                      fontWeight: 800,
+                      padding: '0.5rem 1.5rem',
+                      borderRadius: '4px',
+                      border: 'none',
+                      cursor: stock.available > 0 ? 'pointer' : 'not-allowed',
+                      opacity: stock.available > 0 ? 1 : 0.5
+                    }}
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      if (stock.available > 0) {
+                        const availableAsset = stock.matchingAssets.find(a => a.status === 'Idle');
+                        if (availableAsset) {
+                          addToCart(availableAsset, 7); // Default 7 days
+                          setSelectedVehicle(null);
+                        }
+                      }
+                    }}
+                  >
+                    {stock.available > 0 ? 'RENT NOW' : 'OUT OF STOCK'}
+                  </button>
+                  <button className="modal-close-btn" onClick={() => setSelectedVehicle(null)}>
+                    <X size={26} />
+                  </button>
+                </div>
               </div>
 
               <div className="modal-body-rentals">

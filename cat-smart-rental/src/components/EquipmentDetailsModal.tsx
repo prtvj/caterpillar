@@ -18,6 +18,7 @@ export function EquipmentDetailsModal({ type, asset, onClose }: Props) {
   const [isMapExpanded, setIsMapExpanded] = useState(false);
   const toggleAssetLock = useStore(state => state.toggleAssetLock);
   const unlockAssetWithRfid = useStore(state => state.unlockAssetWithRfid);
+  const addToCart = useStore(state => state.addToCart);
   
   const imageUrl = `/images/${type.toLowerCase()}.png`;
 
@@ -44,9 +45,32 @@ export function EquipmentDetailsModal({ type, asset, onClose }: Props) {
           <div className="hud-header">
             <div className="hud-title-wrapper">
               <h2 className="hud-title">SYSTEM OVERVIEW</h2>
-              <div className="hud-subtitle">{type.toUpperCase()} | {asset.id}</div>
+              <div className="hud-subtitle">{type.toUpperCase()} | {asset.id} | ${asset.pricePerDay || 300}/day</div>
             </div>
-            <button className="hud-close" onClick={onClose}>&times;</button>
+            <div style={{ display: 'flex', gap: '1rem', alignItems: 'center' }}>
+              <button 
+                onClick={(e) => {
+                  e.stopPropagation();
+                  addToCart(asset, 7); // Default to 7 days for now
+                  onClose();
+                }}
+                style={{
+                  background: 'var(--color-brand-yellow)',
+                  color: '#000',
+                  border: 'none',
+                  padding: '0.5rem 1rem',
+                  fontWeight: 'bold',
+                  borderRadius: '4px',
+                  cursor: 'pointer',
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: '0.5rem'
+                }}
+              >
+                RENT NOW
+              </button>
+              <button className="hud-close" onClick={onClose}>&times;</button>
+            </div>
           </div>
 
           <div className="hud-main">

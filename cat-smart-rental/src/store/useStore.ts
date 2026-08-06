@@ -1,5 +1,5 @@
 import { create } from 'zustand';
-import type { Asset, Customer, Alert, KPI } from '../types';
+import type { Asset, Customer, Alert, KPI, CartItem } from '../types';
 import { generateMockDealers, generateMockAssets, generateInitialAlerts } from '../utils/mockData';
 
 interface AppState {
@@ -23,6 +23,12 @@ interface AppState {
   deleteAlert: (alertId: string) => void;
   theme: 'light' | 'dark';
   toggleTheme: () => void;
+  cart: CartItem[];
+  isCartOpen: boolean;
+  addToCart: (asset: Asset, rentalDays: number) => void;
+  removeFromCart: (cartItemId: string) => void;
+  clearCart: () => void;
+  toggleCart: (isOpen?: boolean) => void;
 }
 
 const calculateKPI = (customers: Customer[], assets: Asset[]): KPI => {
@@ -58,9 +64,33 @@ export const useStore = create<AppState>((set) => ({
     maintenanceDue: 0,
     todayRevenue: 0
   },
-  theme: 'light',
-  toggleTheme: () => set((state) => ({ theme: state.theme === 'light' ? 'dark' : 'light' })),
-  
+  theme: 'dark',
+  cart: [],
+  isCartOpen: false,
+
+  toggleTheme: () => set((state) => ({
+    theme: state.theme === 'light' ? 'dark' : 'light'
+  })),
+
+  addToCart: (asset, rentalDays) => set((state) => {
+    const newItem: CartItem = {
+      id: Math.random().toString(36).substr(2, 9),
+      asset,
+      rentalDays
+    };
+    return { cart: [...state.cart, newItem], isCartOpen: true };
+  }),
+
+  removeFromCart: (cartItemId) => set((state) => ({
+    cart: state.cart.filter(item => item.id !== cartItemId)
+  })),
+
+  clearCart: () => set({ cart: [] }),
+
+  toggleCart: (isOpen) => set((state) => ({
+    isCartOpen: isOpen !== undefined ? isOpen : !state.isCartOpen
+  })),
+
   initialize: () => {
     const customers = generateMockDealers();
     const assets = generateMockAssets(200, customers);

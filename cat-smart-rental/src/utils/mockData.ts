@@ -137,12 +137,14 @@ export const generateMockAssets = (count: number, customers: Customer[]): Asset[
         // Security & Geofence fields
         isLocked: initialLocked,
         isWaitlistedForLock: initialWaitlisted,
+        rfidUnlockCode: 'RFID-CAT-8890',
         autoLockEnabled: true,
-        lockReason: initialLocked ? 'Overdue return date passed & Idle duration exceeded 5.0 hours limit' : undefined,
+        lockReason: initialLocked ? '4-Hour Idle Auto-Lock Enabled' : undefined,
         idleDurationHours: initialIdleHours,
         geofenceStatus: isGeofenceBreached ? 'Out of Range Geofence Alert' : 'Inside Allowed Area',
-        geofenceDistanceKm: isGeofenceBreached ? parseFloat((1.8 + Math.random() * 3.5).toFixed(1)) : 0.2,
-        assignedSitePerimeter: `${assignedArea} Site Perimeter (3.5 km Radius)`
+        geofenceDistanceKm: isGeofenceBreached ? parseFloat((2.5 + Math.random() * 5).toFixed(1)) : 0,
+        assignedSitePerimeter: isHardcoded ? hData!.assignedSitePerimeter : 'Radius: 5.0km',
+        pricePerDay: Math.floor(Math.random() * 500) + 150
       });
   }
   return assets;

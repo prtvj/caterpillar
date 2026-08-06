@@ -46,6 +46,13 @@ export interface Asset {
   geofenceStatus?: 'Inside Allowed Area' | 'Out of Range Geofence Alert';
   geofenceDistanceKm?: number;
   assignedSitePerimeter?: string;
+  pricePerDay?: number;
+}
+
+export interface CartItem {
+  id: string; // unique cart item id
+  asset: Asset;
+  rentalDays: number;
 }
 
 export interface Alert {
