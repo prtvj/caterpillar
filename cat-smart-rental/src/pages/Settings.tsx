@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Globe, Bell, MapPin, User, Shield, Save } from 'lucide-react';
+import { Globe, Bell, MapPin, Shield, Save } from 'lucide-react';
 import './Settings.css';
 
 export function Settings() {

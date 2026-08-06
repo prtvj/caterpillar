@@ -4,12 +4,8 @@ import {
   Users, 
   Tractor, 
   ScanLine, 
-  Map, 
-  FileText, 
-  BarChart3, 
   Lightbulb, 
   Bell, 
-  Wrench, 
   Settings,
   LogOut
 } from 'lucide-react';
@@ -19,7 +15,7 @@ import './Sidebar.css';
 const navItems = [
   { name: 'Dashboard', path: '/', icon: LayoutDashboard },
   { name: 'Customers', path: '/customers', icon: Users },
-  { name: 'Assets', path: '/assets', icon: Tractor },
+  { name: 'Rentals', path: '/rentals', icon: Tractor },
   { name: 'QR Scanner', path: '/rfid', icon: ScanLine },
   { name: 'AI Recommendations', path: '/recommendations', icon: Lightbulb },
   { name: 'Alerts & Notifications', path: '/alerts', icon: Bell, showBadge: true },

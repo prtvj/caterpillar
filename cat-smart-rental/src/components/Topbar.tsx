@@ -123,7 +123,7 @@ export function Topbar() {
           )}
         </div>
 
-        <div className="user-profile">
+        <div className="user-profile" onClick={() => navigate('/admin')} title="Open Admin Control Panel" style={{ cursor: 'pointer' }}>
           <div className="avatar">
             <User size={20} />
           </div>

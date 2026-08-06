@@ -1,4 +1,5 @@
 import type { LucideIcon } from 'lucide-react';
+import { ArrowRight } from 'lucide-react';
 import './KPICard.css';
 
 interface KPICardProps {
@@ -9,11 +10,26 @@ interface KPICardProps {
   trend?: 'up' | 'down';
   trendValue?: string;
   color?: string;
+  onClick?: () => void;
 }
 
-export function KPICard({ title, value, subtitle, icon: Icon, trend, trendValue, color = 'var(--color-brand-yellow)' }: KPICardProps) {
+export function KPICard({ 
+  title, 
+  value, 
+  subtitle, 
+  icon: Icon, 
+  trend, 
+  trendValue, 
+  color = 'var(--color-brand-yellow)',
+  onClick 
+}: KPICardProps) {
   return (
-    <div className="kpi-card">
+    <div 
+      className={`kpi-card ${onClick ? 'clickable' : ''}`}
+      onClick={onClick}
+      role={onClick ? 'button' : undefined}
+      tabIndex={onClick ? 0 : undefined}
+    >
       <div className="kpi-icon-container" style={{ borderColor: color }}>
         <Icon size={24} style={{ color }} />
       </div>
@@ -29,7 +45,12 @@ export function KPICard({ title, value, subtitle, icon: Icon, trend, trendValue,
             </span>
           )}
         </div>
-        {subtitle && <div className="kpi-subtitle">{subtitle}</div>}
+        {subtitle && (
+          <div className="kpi-subtitle">
+            <span>{subtitle}</span>
+            {onClick && <ArrowRight size={13} className="kpi-arrow-icon" />}
+          </div>
+        )}
       </div>
     </div>
   );

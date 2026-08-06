@@ -9,23 +9,23 @@
   --color-brand-yellow-transparent: rgba(255, 204, 0, 0.15);
   
   /* Background Colors - Light */
-  --color-bg-base: #F4F4F4; /* Light grey base typical of corporate dashboards */
+  --color-bg-base: #F8F9FA;
   --color-bg-panel: #FFFFFF;
   --color-bg-card: #FFFFFF;
-  --color-bg-hover: #E0E0E0;
-  --color-bg-active: #D6D6D6;
+  --color-bg-hover: #F3F4F6;
+  --color-bg-active: #E5E7EB;
 
   /* Border Colors */
-  --color-border: #DCDCDC;
-  --color-border-light: #EEEEEE;
+  --color-border: #E5E7EB;
+  --color-border-light: #F3F4F6;
 
   /* Text Colors - Light */
-  --color-text-primary: #1A1A1A; /* Near black */
-  --color-text-secondary: #555555;
-  --color-text-muted: #888888;
+  --color-text-primary: #111827;
+  --color-text-secondary: #4B5563;
+  --color-text-muted: #6B7280;
   --color-text-inverse: #FFFFFF;
 
-  /* Status Colors (Same for both) */
+  /* Status Colors */
   --color-status-success: #008A00;
   --color-status-success-bg: rgba(0, 138, 0, 0.1);
   --color-status-warning: #FF8C00;
@@ -42,40 +42,39 @@
   --spacing-lg: 1.5rem;
   --spacing-xl: 2rem;
 
-  /* Border Radius - Cat is very industrial, minimal rounding */
-  --radius-sm: 2px;
-  --radius-md: 4px;
-  --radius-lg: 6px;
+  --radius-sm: 4px;
+  --radius-md: 6px;
+  --radius-lg: 8px;
   --radius-full: 9999px;
 
-  /* Shadows - Flat UI */
-  --shadow-sm: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
-  --shadow-md: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
-  --shadow-lg: 0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23);
+  /* Shadows */
+  --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.05);
+  --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.08);
+  --shadow-lg: 0 12px 24px rgba(0, 0, 0, 0.12);
   --shadow-glow: none;
 }
 
 body.theme-dark {
   /* Background Colors - Dark */
-  --color-bg-base: #121212;
-  --color-bg-panel: #1E1E1E;
-  --color-bg-card: #252525;
-  --color-bg-hover: #333333;
-  --color-bg-active: #404040;
+  --color-bg-base: #0F0F12;
+  --color-bg-panel: #161619;
+  --color-bg-card: #1A1A1E;
+  --color-bg-hover: #24242A;
+  --color-bg-active: #2E2E36;
 
   /* Border Colors */
-  --color-border: #333333;
-  --color-border-light: #444444;
+  --color-border: #26262B;
+  --color-border-light: #333339;
 
   /* Text Colors - Dark */
   --color-text-primary: #FFFFFF;
-  --color-text-secondary: #AAAAAA;
-  --color-text-muted: #777777;
+  --color-text-secondary: #9CA3AF;
+  --color-text-muted: #6B7280;
   --color-text-inverse: #000000;
   
-  --shadow-sm: 0 1px 3px rgba(0,0,0,0.5);
-  --shadow-md: 0 3px 6px rgba(0,0,0,0.6);
-  --shadow-lg: 0 10px 20px rgba(0,0,0,0.7);
+  --shadow-sm: 0 2px 6px rgba(0,0,0,0.4);
+  --shadow-md: 0 6px 16px rgba(0,0,0,0.5);
+  --shadow-lg: 0 16px 36px rgba(0,0,0,0.6);
 }
 
 /* Base Rest */
@@ -92,7 +91,7 @@ body {
   line-height: 1.5;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  transition: background-color 0.3s ease, color 0.3s ease;
+  transition: background-color 0.25s ease, color 0.25s ease;
 }
 
 a {
@@ -126,7 +125,7 @@ button:focus-visible {
   background: var(--color-bg-base);
 }
 ::-webkit-scrollbar-thumb {
-  background: var(--color-border-light);
+  background: var(--color-border);
   border-radius: var(--radius-full);
 }
 ::-webkit-scrollbar-thumb:hover {
@@ -134,64 +133,57 @@ button:focus-visible {
 }
 
 /* Leaflet dark map fix */
-body.theme-dark .leaflet-layer,
-body.theme-dark .leaflet-control-zoom-in,
-body.theme-dark .leaflet-control-zoom-out,
 body.theme-dark .leaflet-control-attribution {
   filter: invert(100%) hue-rotate(180deg) brightness(95%) contrast(90%);
 }
 
-/* Industrial Solid Cards (Remove Glassmorphism) */
-.widget-card, .topbar, .sidebar, .modal-content, .notification-dropdown {
-  background: var(--color-bg-card) !important;
-  border: 1px solid var(--color-border) !important;
-  box-shadow: var(--shadow-sm) !important;
-  border-radius: var(--radius-md) !important; /* Sharp/industrial corners */
-  backdrop-filter: none !important;
-  -webkit-backdrop-filter: none !important;
+/* Cards & Panel Styling */
+.widget-card, .modal-content {
+  background: var(--color-bg-card);
+  border: 1px solid var(--color-border);
+  box-shadow: var(--shadow-sm);
+  border-radius: var(--radius-md);
 }
 
 .widget-card {
-  /* Solid top border in Cat Yellow for extra brand feel */
-  border-top: 3px solid var(--color-brand-yellow) !important;
+  border-top: 3px solid var(--color-brand-yellow);
 }
 
 .widget-card:hover {
-  box-shadow: var(--shadow-md) !important;
-  transform: translateY(-2px);
+  box-shadow: var(--shadow-md);
 }
 
 /* Cat Button Overrides */
 button.icon-btn {
-  background: var(--color-bg-hover) !important;
-  border: 1px solid var(--color-border) !important;
-  color: var(--color-text-primary) !important;
-  border-radius: var(--radius-md) !important; /* Square-ish icons */
-  box-shadow: none !important;
+  background: var(--color-bg-hover);
+  border: 1px solid var(--color-border);
+  color: var(--color-text-primary);
+  border-radius: var(--radius-md);
+  box-shadow: none;
 }
 button.icon-btn:hover {
-  background: var(--color-bg-active) !important;
-  color: var(--color-text-primary) !important;
-  border-color: var(--color-border-light) !important;
+  background: var(--color-bg-active);
+  color: var(--color-brand-yellow);
+  border-color: var(--color-brand-yellow);
 }
 
 button.btn-scan, .btn-save {
-  background: var(--color-brand-yellow) !important;
-  color: #000 !important;
-  font-weight: 800 !important;
+  background: var(--color-brand-yellow);
+  color: #000;
+  font-weight: 800;
   text-transform: uppercase;
-  border-radius: var(--radius-sm) !important;
-  box-shadow: var(--shadow-sm) !important;
+  border-radius: var(--radius-sm);
+  box-shadow: var(--shadow-sm);
   letter-spacing: 1px;
 }
 button.btn-scan:hover:not(.disabled), .btn-save:hover {
-  background: var(--color-brand-yellow-hover) !important;
-  box-shadow: var(--shadow-md) !important;
+  background: var(--color-brand-yellow-hover);
+  box-shadow: var(--shadow-md);
 }
 
 button.rfid-tab.active {
   background: var(--color-bg-hover);
-  border-bottom-color: var(--color-brand-yellow) !important;
+  border-bottom-color: var(--color-brand-yellow);
   text-shadow: none;
 }
 

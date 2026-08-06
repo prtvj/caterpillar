@@ -1,15 +1,16 @@
 import { useEffect } from 'react';
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import { Sidebar } from './components/Sidebar';
 import { Topbar } from './components/Topbar';
 import { Dashboard } from './pages/Dashboard';
-import { Assets } from './pages/Assets';
+import { Rentals } from './pages/Rentals';
 import { RFID } from './pages/RFID';
 import { Recommendations } from './pages/Recommendations';
 import { Customers } from './pages/Customers';
 import { Inventory } from './pages/Inventory';
 import { Forecast } from './pages/Forecast';
 import { AlertsPage } from './pages/AlertsPage';
+import { AdminPage } from './pages/AdminPage';
 import { Settings } from './pages/Settings';
 
 import { useStore } from './store/useStore';
@@ -44,13 +45,15 @@ function App() {
           <div className="page-content">
             <Routes>
               <Route path="/" element={<Dashboard />} />
-              <Route path="/assets" element={<Assets />} />
+              <Route path="/rentals" element={<Rentals />} />
+              <Route path="/assets" element={<Navigate to="/rentals" replace />} />
               <Route path="/rfid" element={<RFID />} />
               <Route path="/recommendations" element={<Recommendations />} />
               <Route path="/customers" element={<Customers />} />
               <Route path="/inventory" element={<Inventory />} />
               <Route path="/forecast" element={<Forecast />} />
               <Route path="/alerts" element={<AlertsPage />} />
+              <Route path="/admin" element={<AdminPage />} />
               <Route path="/settings" element={<Settings />} />
 
               {/* Other routes will be added here */}

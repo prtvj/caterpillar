@@ -27,7 +27,7 @@ export interface Asset {
   engineHours: number;
   idleHours: number;
   lastUpdated: string;
-  // newly added tracking fields
+  // tracking fields
   siteId?: string;
   checkInDate?: string;
   checkOutDate?: string;
@@ -36,6 +36,16 @@ export interface Asset {
   rentalDays?: number;
   lastOperatorId?: string;
   daysIdle?: number;
+  // Remote System Security & Geofence fields
+  isLocked?: boolean;
+  autoLockEnabled?: boolean;
+  isWaitlistedForLock?: boolean;
+  rfidUnlockCode?: string;
+  lockReason?: string;
+  idleDurationHours?: number;
+  geofenceStatus?: 'Inside Allowed Area' | 'Out of Range Geofence Alert';
+  geofenceDistanceKm?: number;
+  assignedSitePerimeter?: string;
 }
 
 export interface Alert {
@@ -46,6 +56,7 @@ export interface Alert {
   timestamp: string;
   assetId?: string;
   read?: boolean;
+  category?: 'Geofence' | 'Overdue' | 'Demand' | 'Maintenance' | 'General';
 }
 
 export interface KPI {

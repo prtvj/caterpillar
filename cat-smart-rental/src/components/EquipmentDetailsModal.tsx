@@ -1,7 +1,8 @@
 import './EquipmentDetailsModal.css';
 import type { Asset } from '../types';
-import { Fuel, AlertTriangle, MapPin, Navigation, Timer, Pause, Maximize2, CheckCircle2, Activity, ShieldAlert, Cpu } from 'lucide-react';
+import { MapPin, Maximize2, CheckCircle2, Activity } from 'lucide-react';
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { LiveMap } from './LiveMap';
 import { useStore } from '../store/useStore';
 
@@ -12,19 +13,19 @@ interface Props {
   onClose: () => void;
 }
 
-export function EquipmentDetailsModal({ type, asset, quantity, onClose }: Props) {
+export function EquipmentDetailsModal({ type, asset, onClose }: Props) {
+  const navigate = useNavigate();
   const [isMapExpanded, setIsMapExpanded] = useState(false);
-  const [showAlertDetails, setShowAlertDetails] = useState(false);
-  const alerts = useStore(state => state.alerts);
-  const assetAlerts = alerts.filter(a => a.assetId === asset.id && !a.read);
+  const toggleAssetLock = useStore(state => state.toggleAssetLock);
+  const unlockAssetWithRfid = useStore(state => state.unlockAssetWithRfid);
   
   const imageUrl = `/images/${type.toLowerCase()}.png`;
 
   // HUD values (mocked for visual effect based on existing asset stats)
   const engineHealth = Math.floor(80 + (asset.fuelLevel * 0.2));
-  const hydraulicHealth = Math.floor(75 + (asset.engineHoursPerDay * 2));
+  const hydraulicHealth = Math.floor(75 + ((asset.engineHoursPerDay ?? 3) * 2));
   const temp = Math.floor(65 + Math.random() * 15);
-  const wear = Math.floor(asset.idleHoursPerDay * 3);
+  const wear = Math.floor((asset.idleHoursPerDay ?? 2) * 3);
 
   return (
     <div className="modal-overlay" onClick={onClose}>
@@ -110,33 +111,77 @@ export function EquipmentDetailsModal({ type, asset, quantity, onClose }: Props)
                 </div>
               </div>
 
-              {/* Maintenance */}
-              <div className="hud-panel">
-                <div className="hud-panel-title">MAINTENANCE</div>
-                <div 
-                  className="hud-metric" 
-                  style={{ marginTop: '1rem', cursor: assetAlerts.length > 0 ? 'pointer' : 'default' }}
-                  onClick={() => { if (assetAlerts.length > 0) setShowAlertDetails(!showAlertDetails) }}
-                >
-                  <div className="hud-metric-header" style={{ alignItems: 'center', gap: '0.5rem' }}>
-                    <ShieldAlert size={16} color="var(--color-brand-yellow)" />
-                    <span style={{ textDecoration: assetAlerts.length > 0 ? 'underline' : 'none' }}>Alerts:</span>
-                    <span className="hud-metric-value" style={{ color: assetAlerts.length === 0 ? '#00ff00' : 'red' }}>
-                      {assetAlerts.length}
+              {/* Security & System Lock Controls */}
+              <div className="hud-panel" style={{ borderColor: asset.isLocked ? 'red' : 'var(--color-border)' }}>
+                <div className="hud-panel-title" style={{ color: asset.isLocked ? 'red' : 'var(--color-brand-yellow)' }}>
+                  SECURITY & REMOTE LOCK
+                </div>
+                
+                <div style={{ marginTop: '0.75rem', display: 'flex', flexDirection: 'column', gap: '0.5rem', fontSize: '0.8rem', color: '#fff' }}>
+                  <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                    <span>Ignition Lock:</span>
+                    <span style={{ fontWeight: 800, color: asset.isLocked ? '#ff4d4d' : '#00ff00' }}>
+                      {asset.isLocked ? '🔒 IMMOBILIZED' : '🔓 UNLOCKED'}
                     </span>
                   </div>
-                </div>
 
-                {showAlertDetails && assetAlerts.length > 0 && (
-                  <div style={{ marginTop: '1rem', background: 'rgba(255,0,0,0.1)', border: '1px solid red', padding: '0.5rem', borderRadius: '4px' }}>
-                    {assetAlerts.map(alert => (
-                      <div key={alert.id} style={{ fontSize: '0.8rem', color: '#fff', marginBottom: '0.5rem', borderBottom: '1px solid rgba(255,0,0,0.2)', paddingBottom: '0.5rem' }}>
-                        <div style={{ color: 'red', fontWeight: 'bold' }}>{alert.title}</div>
-                        <div style={{ color: 'rgba(255,255,255,0.7)' }}>{alert.description}</div>
-                      </div>
-                    ))}
+                  <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                    <span>Auto-Lock (4h Idle):</span>
+                    <span style={{ fontWeight: 700, color: asset.autoLockEnabled ?? true ? '#00ff00' : '#888' }}>
+                      {asset.autoLockEnabled ?? true ? 'ACTIVE' : 'OFF'}
+                    </span>
                   </div>
-                )}
+
+                  <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                    <span>Geofence Range:</span>
+                    <span style={{ fontWeight: 700, color: asset.geofenceStatus === 'Out of Range Geofence Alert' ? '#f59e0b' : '#00ff00' }}>
+                      {asset.geofenceStatus === 'Out of Range Geofence Alert' ? `⚠️ Out of Range (${asset.geofenceDistanceKm || 2.4}km)` : 'OK (Inside Site)'}
+                    </span>
+                  </div>
+
+                  {asset.isLocked ? (
+                    <button 
+                      style={{
+                        marginTop: '0.5rem',
+                        padding: '0.5rem',
+                        background: 'var(--color-brand-yellow)',
+                        color: '#000',
+                        fontWeight: 800,
+                        fontSize: '0.8rem',
+                        border: 'none',
+                        borderRadius: '4px',
+                        cursor: 'pointer'
+                      }}
+                      onClick={() => {
+                        const code = prompt('Scan / Enter Supervisor RFID Security Card ID to Unlock Engine:', 'RFID-CAT-8890');
+                        if (code) unlockAssetWithRfid(asset.id, code);
+                      }}
+                    >
+                      💳 UNLOCK SYSTEM (RFID REQUIRED)
+                    </button>
+                  ) : (
+                    <button 
+                      style={{
+                        marginTop: '0.5rem',
+                        padding: '0.5rem',
+                        background: '#ef4444',
+                        color: '#fff',
+                        fontWeight: 800,
+                        fontSize: '0.8rem',
+                        border: 'none',
+                        borderRadius: '4px',
+                        cursor: 'pointer'
+                      }}
+                      onClick={() => {
+                        toggleAssetLock(asset.id, 'Manual Remote Security Lock via Equipment HUD Modal');
+                        onClose();
+                        navigate('/alerts');
+                      }}
+                    >
+                      🔒 LOCK ENGINE IGNITION
+                    </button>
+                  )}
+                </div>
               </div>
             </div>
 
