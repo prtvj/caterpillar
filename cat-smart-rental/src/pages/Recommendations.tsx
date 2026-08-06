@@ -1,8 +1,7 @@
 import { useState } from 'react';
 import { Lightbulb, ArrowRight, TrendingUp, AlertTriangle, CheckCircle2, Package } from 'lucide-react';
 import './Recommendations.css';
-import { DemandChart } from '../components/DemandChart';
-
+import { StockDemandChart } from '../components/StockDemandChart';
 import { useStore } from '../store/useStore';
 
 export function Recommendations() {
@@ -62,12 +61,14 @@ export function Recommendations() {
         </div>
       </div>
 
-      <div style={{ marginBottom: '2rem' }}>
-        <h2 style={{ fontSize: '1.25rem', fontWeight: 600, marginBottom: '1rem', color: 'var(--color-brand-yellow)', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-          <TrendingUp size={20} /> Demand Forecasting
+      {/* Stock Market Style Demand Forecasting Section */}
+      <div style={{ marginBottom: '2.5rem' }}>
+        <h2 style={{ fontSize: '1.25rem', fontWeight: 700, marginBottom: '0.5rem', color: 'var(--color-brand-yellow)', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+          <TrendingUp size={22} /> Stock Market Demand Forecast Index
         </h2>
-        <DemandChart />
+        <StockDemandChart />
       </div>
+
 
       <div style={{ marginBottom: '2rem' }}>
         <h2 style={{ fontSize: '1.25rem', fontWeight: 600, marginBottom: '1rem', color: 'var(--color-brand-yellow)', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>

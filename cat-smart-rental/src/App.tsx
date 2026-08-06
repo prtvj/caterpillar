@@ -6,12 +6,14 @@ import { Dashboard } from './pages/Dashboard';
 import { Rentals } from './pages/Rentals';
 import { RFID } from './pages/RFID';
 import { Recommendations } from './pages/Recommendations';
+import { Anomalies } from './pages/Anomalies';
 import { Customers } from './pages/Customers';
 import { Inventory } from './pages/Inventory';
 import { Forecast } from './pages/Forecast';
 import { AlertsPage } from './pages/AlertsPage';
 import { AdminPage } from './pages/AdminPage';
 import { Settings } from './pages/Settings';
+
 
 import { useStore } from './store/useStore';
 import './App.css';
@@ -49,7 +51,9 @@ function App() {
               <Route path="/assets" element={<Navigate to="/rentals" replace />} />
               <Route path="/rfid" element={<RFID />} />
               <Route path="/recommendations" element={<Recommendations />} />
+              <Route path="/anomalies" element={<Anomalies />} />
               <Route path="/customers" element={<Customers />} />
+
               <Route path="/inventory" element={<Inventory />} />
               <Route path="/forecast" element={<Forecast />} />
               <Route path="/alerts" element={<AlertsPage />} />

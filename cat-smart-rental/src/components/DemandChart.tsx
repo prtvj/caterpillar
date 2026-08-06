@@ -1,10 +1,27 @@
+import { useState, useEffect } from 'react';
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
 import { useStore } from '../store/useStore';
 
 export function DemandChart() {
   const customers = useStore(state => state.customers);
+  const [mlData, setMlData] = useState<{ name: string; demand: number }[]>([]);
 
-  // Aggregate demands by machine type
+  useEffect(() => {
+    fetch('http://localhost:3000/api/forecast')
+      .then(res => res.ok ? res.json() : null)
+      .then(json => {
+        if (json && json.by_equipment) {
+          const formatted = json.by_equipment.map((item: { Equipment_Type: string; total_demand: number; avg_demand: number }) => ({
+            name: item.Equipment_Type,
+            demand: Math.round(item.avg_demand)
+          }));
+          setMlData(formatted);
+        }
+      })
+      .catch(() => {});
+  }, []);
+
+  // Aggregate demands by machine type from store
   const demandMap: Record<string, number> = {};
   
   customers.forEach(customer => {
@@ -18,10 +35,14 @@ export function DemandChart() {
     }
   });
 
-  const data = Object.keys(demandMap).map(type => ({
+  let data = Object.keys(demandMap).map(type => ({
     name: type,
     demand: demandMap[type]
   })).sort((a, b) => b.demand - a.demand);
+
+  if (data.length === 0 && mlData.length > 0) {
+    data = mlData;
+  }
 
   if (data.length === 0) {
     return (
@@ -43,7 +64,7 @@ export function DemandChart() {
             itemStyle={{ color: 'var(--color-brand-yellow)' }}
             cursor={{ fill: 'var(--color-bg-hover)' }}
           />
-          <Bar dataKey="demand" fill="var(--color-brand-yellow)" radius={[4, 4, 0, 0]} name="Required Quantity" />
+          <Bar dataKey="demand" fill="var(--color-brand-yellow)" radius={[4, 4, 0, 0]} name="Projected Demand (Units)" />
         </BarChart>
       </ResponsiveContainer>
     </div>

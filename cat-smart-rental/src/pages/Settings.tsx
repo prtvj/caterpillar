@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { Globe, Bell, MapPin, Shield, Save } from 'lucide-react';
 import './Settings.css';
 
+
 export function Settings() {
   const [activeTab, setActiveTab] = useState<'general' | 'notifications' | 'geofencing' | 'account'>('general');
   const [saved, setSaved] = useState(false);

@@ -5,10 +5,12 @@ import {
   Tractor, 
   ScanLine, 
   Lightbulb, 
+  ShieldAlert,
   Bell, 
   Settings,
   LogOut
 } from 'lucide-react';
+
 import { useStore } from '../store/useStore';
 import './Sidebar.css';
 
@@ -18,9 +20,11 @@ const navItems = [
   { name: 'Rentals', path: '/rentals', icon: Tractor },
   { name: 'QR Scanner', path: '/rfid', icon: ScanLine },
   { name: 'AI Recommendations', path: '/recommendations', icon: Lightbulb },
+  { name: 'Anomaly Detection', path: '/anomalies', icon: ShieldAlert },
   { name: 'Alerts & Notifications', path: '/alerts', icon: Bell, showBadge: true },
   { name: 'Settings', path: '/settings', icon: Settings },
 ];
+
 
 export function Sidebar() {
   const alerts = useStore((state) => state.alerts);
