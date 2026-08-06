@@ -1,6 +1,6 @@
 import { useState, useRef, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Search, Bell, User, AlertCircle, AlertTriangle, Info, Clock, Sun, Moon } from 'lucide-react';
+import { Search, Bell, User, AlertCircle, AlertTriangle, Info, Clock, Sun, Moon, ShoppingCart } from 'lucide-react';
 import { useStore } from '../store/useStore';
 import './Topbar.css';
 
@@ -22,6 +22,8 @@ export function Topbar() {
   const theme = useStore((state) => state.theme);
   const toggleTheme = useStore((state) => state.toggleTheme);
   const unreadAlerts = alerts.filter(a => !a.read);
+  const cart = useStore((state) => state.cart);
+  const toggleCart = useStore((state) => state.toggleCart);
   
   const [showNotifications, setShowNotifications] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
@@ -70,6 +72,11 @@ export function Topbar() {
 
         <button className="icon-btn theme-toggle" onClick={toggleTheme} title="Toggle Theme">
           {theme === 'light' ? <Moon size={20} /> : <Sun size={20} />}
+        </button>
+
+        <button className="icon-btn" onClick={() => toggleCart(true)} style={{ position: 'relative' }}>
+          <ShoppingCart size={20} />
+          {cart.length > 0 && <span className="notification-badge">{cart.length}</span>}
         </button>
 
         <div className="notification-wrapper" ref={dropdownRef}>

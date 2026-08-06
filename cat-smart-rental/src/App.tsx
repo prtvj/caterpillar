@@ -13,6 +13,7 @@ import { Forecast } from './pages/Forecast';
 import { AlertsPage } from './pages/AlertsPage';
 import { AdminPage } from './pages/AdminPage';
 import { Settings } from './pages/Settings';
+import { CartDrawer } from './components/CartDrawer';
 
 
 import { useStore } from './store/useStore';
@@ -66,6 +67,7 @@ function App() {
           </div>
         </main>
       </div>
+      <CartDrawer />
     </Router>
   );
 }

@@ -60,3 +60,4 @@ model Alert {
   assetId     String?
   asset       Asset?   @relation(fields: [assetId], references: [id])
 }
+}
